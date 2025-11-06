@@ -89,7 +89,7 @@ const geetansh = {
 </div>
 
 <div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=geetxnshgoyal&theme=tokyonight&hide_border=true&stroke=0000&background=0D1117&ring=A9FEF7&fire=A9FEF7&currStreakLabel=A9FEF7" alt="GitHub Streak" />
+  <img src="https://streak-stats.demolab.com/?user=geetxnshgoyal&theme=tokyonight&hide_border=true&stroke=0000&background=0D1117&ring=A9FEF7&fire=A9FEF7&currStreakLabel=A9FEF7" alt="GitHub Streak" />
 </div>
 
 <div align="center">
@@ -98,7 +98,7 @@ const geetansh = {
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
-## � Watch the Snake Eat My Contributions!
+## 🐍 Watch the Snake Eat My Contributions!
 
 <div align="center">
   <picture>
@@ -106,6 +106,9 @@ const geetansh = {
     <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/github-contribution-grid-snake.svg">
     <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/github-contribution-grid-snake.svg">
   </picture>
+  
+  <br/>
+  <sub>⚠️ Snake animation will appear once GitHub Actions runs. Go to <b>Settings → Actions → General</b> and enable <b>Read and write permissions</b>, then the snake will generate automatically!</sub>
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
@@ -164,11 +167,22 @@ const geetansh = {
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
-## 🎵 Spotify Playing
+## 🎵 Music & Playlists
 
 <div align="center">
-  
-[![Spotify](https://novatorem-geetxnshgoyal.vercel.app/api/spotify)](https://open.spotify.com/user/yourspotifyuser)
+
+### 🎧 Spotify
+
+<!-- To enable "Now Playing": Deploy https://github.com/kittinan/spotify-github-profile to Vercel -->
+<!-- For now, showing my favorite playlist -->
+
+[![Spotify Playlist](https://img.shields.io/badge/Spotify-My%20Playlist-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/5qNddT5FPnXooNxSUhy0uJ)
+
+### 🎵 More Music Platforms
+
+[![Apple Music](https://img.shields.io/badge/Apple%20Music-Listen-FA57C1?style=for-the-badge&logo=apple-music&logoColor=white)](https://music.apple.com/)
+[![YouTube Music](https://img.shields.io/badge/YouTube%20Music-Listen-FF0000?style=for-the-badge&logo=youtube-music&logoColor=white)](https://music.youtube.com/)
+[![SoundCloud](https://img.shields.io/badge/SoundCloud-Follow-FF5500?style=for-the-badge&logo=soundcloud&logoColor=white)](https://soundcloud.com/)
 
 </div>
 
