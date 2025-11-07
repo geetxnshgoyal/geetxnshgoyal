@@ -2,7 +2,7 @@
   
 # 🚀 Welcome to Geetansh's Digital Universe 🌌
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&duration=2800&pause=2000&color=A9FEF7&center=true&vCenter=true&width=940&lines=Hey!+I'm+Geetansh+Goyal+%F0%9F%91%8B;Full+Stack+Developer+%F0%9F%92%BB;Open+Source+Enthusiast+%E2%9C%A8;Always+Learning+New+Things+%F0%9F%9A%80" alt="Typing SVG" />
+<img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=32&duration=2800&pause=2000&color=A9FEF7&center=true&vCenter=true&width=940&lines=Hey!+I'm+Geetansh+Goyal+%F0%9F%91%8B;Open+Source+Enthusiast+%E2%9C%A8;Always+Learning+New+Things+%F0%9F%9A%80" alt="Typing SVG" />
 
 </div>
 
@@ -15,32 +15,6 @@
 </div>
 
 <br/>
-
-## 🎯 About Me
-
-```typescript
-const geetansh = {
-    pronouns: "He" | "Him",
-    code: ["JavaScript", "TypeScript", "Python", "Java", "C++"],
-    askMeAbout: ["Web Dev", "Tech", "App Dev", "Gaming", "AI/ML"],
-    technologies: {
-        frontEnd: {
-            js: ["React", "Next.js", "Vue"],
-            css: ["Tailwind", "Bootstrap", "Material-UI"]
-        },
-        backEnd: {
-            js: ["Node.js", "Express", "Nest.js"],
-            python: ["Django", "Flask", "FastAPI"]
-        },
-        databases: ["MongoDB", "MySQL", "PostgreSQL", "Redis"],
-        devOps: ["Docker", "Kubernetes", "AWS", "CI/CD"],
-        mobile: ["React Native", "Flutter"]
-    },
-    currentFocus: "Building scalable applications with cutting-edge tech",
-    funFact: "There are two ways to write error-free programs; only the third one works"
-};
-```
-
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
 ## 🛠️ Tech Arsenal
@@ -49,23 +23,12 @@ const geetansh = {
 
 ### 👨‍💻 Programming Languages
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![C++](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
 
 ### 🚀 Frontend Development
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
-
-
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-
-### ⚙️ Backend Development
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
-![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 
 ### 🗄️ Databases
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
@@ -149,7 +112,6 @@ const geetansh = {
 <div align="center">
   
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/geetansh-goyal-a93286337)
-[![Twitter](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/geetxnshgoyal)
 [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/geetxnshgoyal)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:goyalgeetansh@gmail.com)
 
@@ -167,24 +129,6 @@ const geetansh = {
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
-## 🎵 Music & Playlists
-
-<div align="center">
-
-### 🎧 Spotify
-
-<!-- To enable "Now Playing": Deploy https://github.com/kittinan/spotify-github-profile to Vercel -->
-<!-- For now, showing my favorite playlist -->
-
-[![Spotify Playlist](https://img.shields.io/badge/Spotify-My%20Playlist-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/playlist/5qNddT5FPnXooNxSUhy0uJ)
-
-### 🎵 More Music Platforms
-
-[![Apple Music](https://img.shields.io/badge/Apple%20Music-Listen-FA57C1?style=for-the-badge&logo=apple-music&logoColor=white)](https://music.apple.com/)
-[![YouTube Music](https://img.shields.io/badge/YouTube%20Music-Listen-FF0000?style=for-the-badge&logo=youtube-music&logoColor=white)](https://music.youtube.com/)
-[![SoundCloud](https://img.shields.io/badge/SoundCloud-Follow-FF5500?style=for-the-badge&logo=soundcloud&logoColor=white)](https://soundcloud.com/)
-
-</div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
 
