@@ -67,7 +67,6 @@
   </picture>
   
   <br/>
-  <sub>⚠️ Snake animation will appear once GitHub Actions runs. Go to <b>Settings → Actions → General</b> and enable <b>Read and write permissions</b>, then the snake will generate automatically!</sub>
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
