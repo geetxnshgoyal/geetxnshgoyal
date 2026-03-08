@@ -1,6 +1,7 @@
 <div align="center">
 
 # Hi, I'm Geetansh Goyal
+
 </div>
 
 ---
@@ -11,6 +12,16 @@
 * Interested in **Open Source, Backend Systems, and Developer Tools**
 * Building projects and organizing developer communities
 * Always learning new technologies
+
+---
+
+## Achievements & Recognition in 1st Year of College
+
+* **ICPC Regionalist**
+* **openSUSE Member**
+* **Active Open Source Contributor**
+* Organizer of developer events and hackathons
+* Builder of developer tools and community projects
 
 ---
 
@@ -35,6 +46,7 @@
 ---
 
 ## GitHub Stats
+
 <p align="center">
 
 <img src="https://streak-stats.demolab.com/?user=geetxnshgoyal&theme=tokyonight&hide_border=true"/>
@@ -46,7 +58,6 @@
 ## Contribution Graph
 
 ![GitHub Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=geetxnshgoyal\&theme=tokyo-night)
-
 
 ---
 
