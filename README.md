@@ -35,14 +35,6 @@
 ---
 
 ## GitHub Stats
-
-<p align="center">
-
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=geetxnshgoyal&layout=compact&theme=tokyonight&hide_border=true" height="180"/>
-
-</p>
-
 <p align="center">
 
 <img src="https://streak-stats.demolab.com/?user=geetxnshgoyal&theme=tokyonight&hide_border=true"/>
