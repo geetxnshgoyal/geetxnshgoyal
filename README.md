@@ -15,7 +15,7 @@
 
 ---
 
-## Achievements & Recognition in 1st Year of College
+## Achievements & Recognition
 
 * **ICPC Regionalist**
 * **openSUSE Member**
