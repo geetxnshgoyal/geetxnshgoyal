@@ -17,6 +17,7 @@
 
 ## Achievements & Recognition
 
+* **GSoC'26 Contributor**
 * **ICPC Regionalist**
 * **openSUSE Member**
 * **Active Open Source Contributor**
