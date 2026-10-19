@@ -1,11 +1,3 @@
-<a href="https://geetanshgoyal.in">
-  <img src="assets/room.jpg" alt="A 3D room with a CRT on the desk running RetroOS, at geetanshgoyal.in" width="100%">
-</a>
-
-<p align="center"><i>
-  <a href="https://geetanshgoyal.in">geetanshgoyal.in</a> — click the monitor. The CRT is running a real
-  window manager, not a video.
-</i></p>
 
 ## Geetansh Goyal
 
