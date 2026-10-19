@@ -9,7 +9,7 @@
 
 ## Geetansh Goyal
 
-<img src="assets/portrait.svg" alt="A portrait of Geetansh Goyal rendered in ASCII characters" align="right" width="300">
+<img src="assets/portrait.svg" alt="A portrait of Geetansh Goyal rendered in ASCII characters" align="right" width="400">
 
 I write backend systems and developer tooling, mostly in the open.
 

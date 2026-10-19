@@ -1,41 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="518" height="511"
-     viewBox="0 0 518 511" role="img"
+<svg xmlns="http://www.w3.org/2000/svg" width="601" height="550"
+     viewBox="0 0 601 550" role="img"
      aria-label="A portrait of Geetansh Goyal rendered in ASCII characters">
   <rect width="100%" height="100%" rx="10" fill="#0b0f0c"/>
   <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace"
-     font-size="12.0" fill="#5de4a8" xml:space="preserve">
-    <text x="18.0" y="28.8">                                ..:::...</text>
-    <text x="18.0" y="43.2">                          :=+##%@@@%@%%%%%%##*=-.</text>
-    <text x="18.0" y="57.6">                     .-=*%@@@@@@@@@@@@@@@@@@@@@@%*=:</text>
-    <text x="18.0" y="72.0">                  -*#%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@%#+-:.</text>
-    <text x="18.0" y="86.4">                -%@%%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%@#+:.</text>
-    <text x="18.0" y="100.8">               .#%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*:</text>
-    <text x="18.0" y="115.2">              .*%%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%:</text>
-    <text x="18.0" y="129.6">             :%@@@@@@@@@@@@@@@@@@@@@@@@%%%%@@@@@@@@@@@@@@@@#</text>
-    <text x="18.0" y="144.0">             #@@@@@@@@@@@@@@@@@@@@%####**###%@@@@@@@@@@@@@@*</text>
-    <text x="18.0" y="158.4">            :@@@@@@@@@@@@%#****#***+++++***##%@@@@@@@@@@@@@:</text>
-    <text x="18.0" y="172.8">            .@@@@@@@@%#**+++++++++++*#%%@@@@@%%@@@@@@@@@@@%</text>
-    <text x="18.0" y="187.2">             #@@@@@@@++#%%@@@@%%##%@@@@@%%%%##*%@@@@@@@@@@+</text>
-    <text x="18.0" y="201.6">             %@@@@@@*#@@@@@@@@@@@@@@##@@%*%#%####*%@@@@@@@.</text>
-    <text x="18.0" y="216.0">             #@@@@@#**####%@@%%%%**%##@@@@@%@@%*#**@@@@@@=</text>
-    <text x="18.0" y="230.4">             =@@@@%#*+%%%%@@@@#%%==+#####%%%#**+*+=*@@@@*</text>
-    <text x="18.0" y="244.8">              +@@@%+++++*###***#=-==+***+++++++++++=%@#@-</text>
-    <text x="18.0" y="259.2">               +@@#-=-:--==++*==*#*#%#**%##***+++++=+@##:</text>
-    <text x="18.0" y="273.6">               -%%#---=+***#%%*%@@%%@@@@%%%#*++****+=%#=</text>
-    <text x="18.0" y="288.0">               .*%*-=-=+**#%%%@@@@%%@@@@@@@@@#*****++#*:</text>
-    <text x="18.0" y="302.4">                .**-=++**#@@@@@%####**#%%@@@@@******+#+:</text>
-    <text x="18.0" y="316.8">                 .+==+***#@@@@%**********##%%%##*#**#=</text>
-    <text x="18.0" y="331.2">                  =+++****#%####%%%%%%##*###%%####*%%</text>
-    <text x="18.0" y="345.6">                   .+***###%#**+++++++++**##%%%###%%:</text>
-    <text x="18.0" y="360.0">                    .+#*###%#******###%%%%%%@@%%@@@-</text>
-    <text x="18.0" y="374.4">                      +@%##%%%%@@%%@@@@@@@@@@@@@@%#:</text>
-    <text x="18.0" y="388.8">                       -@@@%@@@@@@@@@@@@@@@@@@@@%##-</text>
-    <text x="18.0" y="403.2">                       -*%@@@@@@@@@@@@@@@@@@@@@%%##**.</text>
-    <text x="18.0" y="417.6">                      +@+#%%@@@@@@@@@@@@@@@@@%%%%##*@#:</text>
-    <text x="18.0" y="432.0">                     :#@**##%%%@@@@@@@@@@%%%%%%#####@@+:</text>
-    <text x="18.0" y="446.4">                     :=@%**####%%%%%%%%%%%%#########@%=-.</text>
-    <text x="18.0" y="460.8">                    .::*@#*#########################@%-::.   .</text>
-    <text x="18.0" y="475.2">               ..  ..:-=@@###*######################%#:...</text>
-    <text x="18.0" y="489.6">              ..  .. :--*@%###*################**##*%+...        ..</text>
+     font-size="12.0" fill="#5de4a8">
+    <text xml:space="preserve" x="16.0" y="26.8">                                   '``^`.</text>
+    <text xml:space="preserve" x="16.0" y="41.2">                             :+)ruUwwqmqLJUXXzcnf?!`</text>
+    <text xml:space="preserve" x="16.0" y="55.6">                        ^I_upZ8###$Moooohkooaooaaabmn[!.</text>
+    <text xml:space="preserve" x="16.0" y="70.0">                    ;]xzCbOOoZZoaaoOMW8&amp;#$BWMMWWWZoookdJ|&lt;;,'</text>
+    <text xml:space="preserve" x="16.0" y="84.4">                  +UbbdbaooOWBWZMW8$8BB8&amp;#%%%#&amp;8$#%#WabhhmLn]&gt;,</text>
+    <text xml:space="preserve" x="16.0" y="98.8">                 1hbqqkMoZ$#$B8$$$$$$$88$&amp;&amp;##%@%%&amp;&amp;###$OhaOomj-^</text>
+    <text xml:space="preserve" x="16.0" y="113.2">                !LLqOBBOhW8$&amp;#&amp;####%%%%%%%@@%@@@@@@%#&amp;BZZW&amp;BabYI</text>
+    <text xml:space="preserve" x="16.0" y="127.6">               +ChaZZoaOW$B$&amp;##%%%%%%%%##$88$$#@@@@@@%&amp;&amp;##&amp;&amp;ZdOw:</text>
+    <text xml:space="preserve" x="16.0" y="142.0">              _ha&amp;8Mao8%%%@@@@@@@@@@#Wohbdqqwwqh$@@@@@%%&amp;#8oWWhO)</text>
+    <text xml:space="preserve" x="16.0" y="156.4">              J8M8$B&amp;%@@@@@#MZZWWMModwLJUUYYUJCmpB%%@@@@%%8ZOBOb~</text>
+    <text xml:space="preserve" x="16.0" y="170.8">             &lt;8MM%%#@@@@@#ZwJYXXYYYXzcvnxxuczXYJLdB%@%#@@@%#MOWm</text>
+    <text xml:space="preserve" x="16.0" y="185.2">             !WM8@%%%%WpCXvunnnxnnnxxnuzJwhaoooakbbO%@##@%%%$OBf</text>
+    <text xml:space="preserve" x="16.0" y="199.6">             'mW#$W$%8LjnYLdhOokpmCXYqo$$B8WoodwwULba$%#%%$$8MaI</text>
+    <text xml:space="preserve" x="16.0" y="214.0">             ^h&amp;BB#%@ocJkMB$&amp;#8MWBWoOBWqwbawumLmLYYmwYZ%&amp;%#8WWX</text>
+    <text xml:space="preserve" x="16.0" y="228.4">             .k&amp;W&amp;#@BXUmmmCCwbkpqphmCLkXLWZaZBkhObLYLYw%%$BB8al</text>
+    <text xml:space="preserve" x="16.0" y="242.8">              u$Z&amp;%&amp;mJncLpmLWBZobCbJrxwbCpdboakbdLXzUvfq@$Mhat</text>
+    <text xml:space="preserve" x="16.0" y="257.2">              Ib8$%MJJxUCwbphkpLJLdj(|fzwXzczzzcunxunxffZBwkX.</text>
+    <text xml:space="preserve" x="16.0" y="271.6">               IpO#$jxr(][tnnxxnzzr|jrvcuvzXccvvvvnxxux(z8Uwc</text>
+    <text xml:space="preserve" x="16.0" y="286.0">                +paZt?()1(fjxuzLxfwWdCkMowJbdqJzcvuuucvjfkmU&lt;</text>
+    <text xml:space="preserve" x="16.0" y="300.4">                ;qJd)1[)fcYYUmakLa&amp;WodkO$&amp;opmqpLzcczzzznjmXx.</text>
+    <text xml:space="preserve" x="16.0" y="314.8">                 )Cw(||txuvzCkpqkoZohppaoaooOOoBoYzzXYzuxLz(.</text>
+    <text xml:space="preserve" x="16.0" y="329.2">                  )Cf(fxvzYwBBOMobwJUUYzcXLqhB8W$wXYYUYcxJr_.</text>
+    <text xml:space="preserve" x="16.0" y="343.6">                  'tr(nvzXUm8BBBbUcczYUJUUUYULmpbCJJUJYcCr</text>
+    <text xml:space="preserve" x="16.0" y="358.0">                   _nrxzYUUYLbmUJCwqpdbbpwCYUJUmqLLCJJYmp:</text>
+    <text xml:space="preserve" x="16.0" y="372.4">                   .;1zvXYJCLwJYYzvuvvcvuuvzXJCpbqwmmmqb+</text>
+    <text xml:space="preserve" x="16.0" y="386.8">                      (JYYUCmwLYXzvccXYUCLLmqpwbhdppkka?</text>
+    <text xml:space="preserve" x="16.0" y="401.2">                       _wdLLmqpLLpbppdbbbhhoZooohhoZodm!</text>
+    <text xml:space="preserve" x="16.0" y="415.6">                        ;COkdpbkkaZOooaaaoWWWMMZW8BOdmL+</text>
+    <text xml:space="preserve" x="16.0" y="430.0">                         &lt;paooOOOaaoaaooZWWWB$$$8WadqmJu-'</text>
+    <text xml:space="preserve" x="16.0" y="444.4">                        (CnmbaOMB8BBBB8$$$$$8WZOakdpwLYXar"</text>
+    <text xml:space="preserve" x="16.0" y="458.8">                       _OBxUmpbkaOZZZMWMMZoahkkbdppqmCUX8hr!</text>
+    <text xml:space="preserve" x="16.0" y="473.2">                      l(w$XzJLmwqdbbdddbbbbddppqqwmLCCJJOButl.</text>
+    <text xml:space="preserve" x="16.0" y="487.6">                   .',i_|WdXUJCCLmmwwmmwqqwmmmmLLLCCCCCLkW(1?!::"`</text>
+    <text xml:space="preserve" x="16.0" y="502.0">               .`";;,Ii-?wMCJUUJCLLmmLLLLLLLLLLLLLCJCJLmba1&lt;&lt;i;;Il!,`.</text>
+    <text xml:space="preserve" x="16.0" y="516.4">           .`^,;!&gt;;,l!!_]rOkLJUYUJCCCLLLLLLLLLLLCCJJJCCCdw_&lt;il;:,,::;l;,"`.</text>
+    <text xml:space="preserve" x="16.0" y="530.8">       .`":;;,:!i::liI!+])COqLCUUUJJJCCCJJJJJJCJJJYYUUUYpz&lt;&gt;&gt;III:"""";iillI:"'.</text>
   </g>
 </svg>
