@@ -1,4 +1,15 @@
+<a href="https://geetanshgoyal.in">
+  <img src="assets/room.jpg" alt="A 3D room with a CRT on the desk running RetroOS, at geetanshgoyal.in" width="100%">
+</a>
+
+<p align="center"><i>
+  <a href="https://geetanshgoyal.in">geetanshgoyal.in</a> — click the monitor. The CRT is running a real
+  window manager, not a video.
+</i></p>
+
 ## Geetansh Goyal
+
+<img src="assets/portrait.svg" alt="A portrait of Geetansh Goyal rendered in ASCII characters" align="right" width="300">
 
 I write backend systems and developer tooling, mostly in the open.
 
@@ -37,8 +48,18 @@ included, and hands everything behind it a plain 2.4 GHz WPA2-PSK network. One l
 device. C++, MIT licensed, installable from a web page with no toolchain.
 
 **[RetroOS](https://github.com/geetxnshgoyal/Retro-OS)** &nbsp;·&nbsp; [try it](https://geetanshgoyal.in)  
-A tiling window manager and 2D desktop with no external dependencies. It runs on the CRT inside the
-3D room at [geetanshgoyal.in](https://geetanshgoyal.in) — click the monitor.
+A tiling window manager and 2D desktop with no external dependencies — master-and-stack layout, four
+workspaces, a terminal with history and tab completion. It runs on the CRT inside the 3D room above.
+
+<img src="assets/retroos.jpg" alt="RetroOS: a tiling window manager with an about window and a projects window side by side" width="100%">
+
+### A year of commits, eaten
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/snake.svg">
+  <img alt="A snake eating my GitHub contribution graph" src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/snake.svg" width="100%">
+</picture>
 
 ### Elsewhere
 
