@@ -1,44 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="601" height="550"
-     viewBox="0 0 601 550" role="img"
-     aria-label="A portrait of Geetansh Goyal rendered in ASCII characters">
+<svg xmlns="http://www.w3.org/2000/svg" width="643" height="266"
+     viewBox="0 0 643 266" role="img"
+     aria-label="Terminal-style summary card for Geetansh Goyal">
   <rect width="100%" height="100%" rx="10" fill="#0b0f0c"/>
-  <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace"
-     font-size="12.0" fill="#5de4a8">
-    <text xml:space="preserve" x="16.0" y="26.8">                                   '``^`.</text>
-    <text xml:space="preserve" x="16.0" y="41.2">                             :+)ruUwwqmqLJUXXzcnf?!`</text>
-    <text xml:space="preserve" x="16.0" y="55.6">                        ^I_upZ8###$Moooohkooaooaaabmn[!.</text>
-    <text xml:space="preserve" x="16.0" y="70.0">                    ;]xzCbOOoZZoaaoOMW8&amp;#$BWMMWWWZoookdJ|&lt;;,'</text>
-    <text xml:space="preserve" x="16.0" y="84.4">                  +UbbdbaooOWBWZMW8$8BB8&amp;#%%%#&amp;8$#%#WabhhmLn]&gt;,</text>
-    <text xml:space="preserve" x="16.0" y="98.8">                 1hbqqkMoZ$#$B8$$$$$$$88$&amp;&amp;##%@%%&amp;&amp;###$OhaOomj-^</text>
-    <text xml:space="preserve" x="16.0" y="113.2">                !LLqOBBOhW8$&amp;#&amp;####%%%%%%%@@%@@@@@@%#&amp;BZZW&amp;BabYI</text>
-    <text xml:space="preserve" x="16.0" y="127.6">               +ChaZZoaOW$B$&amp;##%%%%%%%%##$88$$#@@@@@@%&amp;&amp;##&amp;&amp;ZdOw:</text>
-    <text xml:space="preserve" x="16.0" y="142.0">              _ha&amp;8Mao8%%%@@@@@@@@@@#Wohbdqqwwqh$@@@@@%%&amp;#8oWWhO)</text>
-    <text xml:space="preserve" x="16.0" y="156.4">              J8M8$B&amp;%@@@@@#MZZWWMModwLJUUYYUJCmpB%%@@@@%%8ZOBOb~</text>
-    <text xml:space="preserve" x="16.0" y="170.8">             &lt;8MM%%#@@@@@#ZwJYXXYYYXzcvnxxuczXYJLdB%@%#@@@%#MOWm</text>
-    <text xml:space="preserve" x="16.0" y="185.2">             !WM8@%%%%WpCXvunnnxnnnxxnuzJwhaoooakbbO%@##@%%%$OBf</text>
-    <text xml:space="preserve" x="16.0" y="199.6">             'mW#$W$%8LjnYLdhOokpmCXYqo$$B8WoodwwULba$%#%%$$8MaI</text>
-    <text xml:space="preserve" x="16.0" y="214.0">             ^h&amp;BB#%@ocJkMB$&amp;#8MWBWoOBWqwbawumLmLYYmwYZ%&amp;%#8WWX</text>
-    <text xml:space="preserve" x="16.0" y="228.4">             .k&amp;W&amp;#@BXUmmmCCwbkpqphmCLkXLWZaZBkhObLYLYw%%$BB8al</text>
-    <text xml:space="preserve" x="16.0" y="242.8">              u$Z&amp;%&amp;mJncLpmLWBZobCbJrxwbCpdboakbdLXzUvfq@$Mhat</text>
-    <text xml:space="preserve" x="16.0" y="257.2">              Ib8$%MJJxUCwbphkpLJLdj(|fzwXzczzzcunxunxffZBwkX.</text>
-    <text xml:space="preserve" x="16.0" y="271.6">               IpO#$jxr(][tnnxxnzzr|jrvcuvzXccvvvvnxxux(z8Uwc</text>
-    <text xml:space="preserve" x="16.0" y="286.0">                +paZt?()1(fjxuzLxfwWdCkMowJbdqJzcvuuucvjfkmU&lt;</text>
-    <text xml:space="preserve" x="16.0" y="300.4">                ;qJd)1[)fcYYUmakLa&amp;WodkO$&amp;opmqpLzcczzzznjmXx.</text>
-    <text xml:space="preserve" x="16.0" y="314.8">                 )Cw(||txuvzCkpqkoZohppaoaooOOoBoYzzXYzuxLz(.</text>
-    <text xml:space="preserve" x="16.0" y="329.2">                  )Cf(fxvzYwBBOMobwJUUYzcXLqhB8W$wXYYUYcxJr_.</text>
-    <text xml:space="preserve" x="16.0" y="343.6">                  'tr(nvzXUm8BBBbUcczYUJUUUYULmpbCJJUJYcCr</text>
-    <text xml:space="preserve" x="16.0" y="358.0">                   _nrxzYUUYLbmUJCwqpdbbpwCYUJUmqLLCJJYmp:</text>
-    <text xml:space="preserve" x="16.0" y="372.4">                   .;1zvXYJCLwJYYzvuvvcvuuvzXJCpbqwmmmqb+</text>
-    <text xml:space="preserve" x="16.0" y="386.8">                      (JYYUCmwLYXzvccXYUCLLmqpwbhdppkka?</text>
-    <text xml:space="preserve" x="16.0" y="401.2">                       _wdLLmqpLLpbppdbbbhhoZooohhoZodm!</text>
-    <text xml:space="preserve" x="16.0" y="415.6">                        ;COkdpbkkaZOooaaaoWWWMMZW8BOdmL+</text>
-    <text xml:space="preserve" x="16.0" y="430.0">                         &lt;paooOOOaaoaaooZWWWB$$$8WadqmJu-'</text>
-    <text xml:space="preserve" x="16.0" y="444.4">                        (CnmbaOMB8BBBB8$$$$$8WZOakdpwLYXar"</text>
-    <text xml:space="preserve" x="16.0" y="458.8">                       _OBxUmpbkaOZZZMWMMZoahkkbdppqmCUX8hr!</text>
-    <text xml:space="preserve" x="16.0" y="473.2">                      l(w$XzJLmwqdbbdddbbbbddppqqwmLCCJJOButl.</text>
-    <text xml:space="preserve" x="16.0" y="487.6">                   .',i_|WdXUJCCLmmwwmmwqqwmmmmLLLCCCCCLkW(1?!::"`</text>
-    <text xml:space="preserve" x="16.0" y="502.0">               .`";;,Ii-?wMCJUUJCLLmmLLLLLLLLLLLLLCJCJLmba1&lt;&lt;i;;Il!,`.</text>
-    <text xml:space="preserve" x="16.0" y="516.4">           .`^,;!&gt;;,l!!_]rOkLJUYUJCCCLLLLLLLLLLLCCJJJCCCdw_&lt;il;:,,::;l;,"`.</text>
-    <text xml:space="preserve" x="16.0" y="530.8">       .`":;;,:!i::liI!+])COqLCUUUJJJCCCJJJJJJCJJJYYUUUYpz&lt;&gt;&gt;III:"""";iillI:"'.</text>
+  <g font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'DejaVu Sans Mono',monospace" font-size="13.0">
+    <text xml:space="preserve" x="20.0" y="38.8" fill="#5de4a8">       .:=**##****=-.</text>
+    <text xml:space="preserve" x="20.0" y="57.7" fill="#5de4a8">     =*#%@%%%@@@@@@%#*=.</text>
+    <text xml:space="preserve" x="20.0" y="76.5" fill="#5de4a8">    +%%%%@@@@@@@@@@@%@%*.</text>
+    <text xml:space="preserve" x="20.0" y="95.4" fill="#5de4a8">   =@%@@@%%%#*++*#@@@@%%:</text>
+    <text xml:space="preserve" x="20.0" y="114.2" fill="#5de4a8">   *@@@***+++**##*#@@@@#</text>
+    <text xml:space="preserve" x="20.0" y="133.1" fill="#5de4a8">   +@@**#%%#######**%@%=</text>
+    <text xml:space="preserve" x="20.0" y="151.9" fill="#5de4a8">   :%%+++**+==++*++=+%*</text>
+    <text xml:space="preserve" x="20.0" y="170.8" fill="#5de4a8">    =#--=++*###**+++=*-</text>
+    <text xml:space="preserve" x="20.0" y="189.6" fill="#5de4a8">     +==+#%#***##%++++.</text>
+    <text xml:space="preserve" x="20.0" y="208.5" fill="#5de4a8">     .=++#*++*+++****:</text>
+    <text xml:space="preserve" x="20.0" y="227.3" fill="#5de4a8">       =*******#####=</text>
+    <text xml:space="preserve" x="20.0" y="246.2" fill="#5de4a8">        *##%%%%%%%%#=.</text>
+    <text xml:space="preserve" x="249.0" y="38.8"><tspan fill="#5de4a8" font-weight="700">geetansh</tspan><tspan fill="#6f7f77">@</tspan><tspan fill="#8fd0ff" font-weight="700">retroos</tspan></text>
+    <text xml:space="preserve" x="249.0" y="57.7" fill="#6f7f77">──────────────────────────────────────────────</text>
+    <text xml:space="preserve" x="249.0" y="76.5"><tspan fill="#8fd0ff" font-weight="700">Role</tspan><tspan fill="#d7e5de">    GSoC 2026 Contributor, openSUSE</tspan></text>
+    <text xml:space="preserve" x="249.0" y="95.4"><tspan fill="#8fd0ff" font-weight="700">Focus</tspan><tspan fill="#d7e5de">   Event-driven systems, dev tooling</tspan></text>
+    <text xml:space="preserve" x="249.0" y="114.2"><tspan fill="#8fd0ff" font-weight="700">Langs</tspan><tspan fill="#d7e5de">   Java · TypeScript · Python · C++</tspan></text>
+    <text xml:space="preserve" x="249.0" y="133.1"><tspan fill="#8fd0ff" font-weight="700">Stack</tspan><tspan fill="#d7e5de">   MQTT · Node-RED · Postgres · React</tspan></text>
+    <text xml:space="preserve" x="249.0" y="151.9"><tspan fill="#8fd0ff" font-weight="700">Study</tspan><tspan fill="#d7e5de">   B.Tech CS, Newton School of Technology</tspan></text>
+    <text xml:space="preserve" x="249.0" y="170.8"><tspan fill="#8fd0ff" font-weight="700">Based</tspan><tspan fill="#d7e5de">   Bengaluru, India</tspan></text>
+    <text xml:space="preserve" x="249.0" y="189.6"><tspan fill="#8fd0ff" font-weight="700">Member</tspan><tspan fill="#d7e5de">  openSUSE since Feb 2026</tspan></text>
+    <text xml:space="preserve" x="249.0" y="208.5"><tspan fill="#8fd0ff" font-weight="700">Site</tspan><tspan fill="#d7e5de">    geetanshgoyal.in</tspan></text>
+    <rect x="249.0" y="231.5" width="15" height="10" rx="2" fill="#e06c75"/>
+    <rect x="271.0" y="231.5" width="15" height="10" rx="2" fill="#e5c07b"/>
+    <rect x="293.0" y="231.5" width="15" height="10" rx="2" fill="#5de4a8"/>
+    <rect x="315.0" y="231.5" width="15" height="10" rx="2" fill="#8fd0ff"/>
+    <rect x="337.0" y="231.5" width="15" height="10" rx="2" fill="#c678dd"/>
+    <rect x="359.0" y="231.5" width="15" height="10" rx="2" fill="#56b6c2"/>
+    <rect x="381.0" y="231.5" width="15" height="10" rx="2" fill="#d7e5de"/>
   </g>
 </svg>
