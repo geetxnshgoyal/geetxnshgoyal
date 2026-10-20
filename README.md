@@ -1,7 +1,6 @@
-
 ## Geetansh Goyal
 
-<img src="assets/portrait.svg" alt="A portrait of Geetansh Goyal rendered in ASCII characters" align="right" width="400">
+<img src="assets/portrait.svg" alt="Terminal-style summary card: Geetansh Goyal, GSoC 2026 contributor with openSUSE, based in Bengaluru" width="643">
 
 I write backend systems and developer tooling, mostly in the open.
 
