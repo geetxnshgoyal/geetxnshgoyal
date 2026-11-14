@@ -1,65 +1,53 @@
-## Geetansh Goyal
+<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/profile.svg" alt="Profile card: Geetansh Goyal, @geetxnshgoyal, openSUSE, Bengaluru, member since May 2021" width="100%">
 
-<img src="assets/portrait.svg" alt="Terminal card: a CRT portrait of Geetansh Goyal beside a summary of his work" width="676">
+I write backend systems and developer tooling, mostly in the open, and I ship apps people install.
+Google Summer of Code 2026 with **openSUSE**, ICPC Amritapuri regionalist, B.Tech CS at Newton
+School of Technology in Bengaluru.
 
-I write backend systems and developer tooling, mostly in the open.
+### What I've built
 
-In 2026 I spent a Google Summer of Code with the **openSUSE Project** working on
-[Uyuni](https://www.uyuni-project.org/), the Linux systems-management platform. Uyuni knew the
-moment a machine registered or a Salt job came back, but none of it ever left the server, so the
-only way to automate on it was to poll an XML-RPC API on a timer and diff the results. I made it
-say *"this just happened"* out loud instead.
+**[Morph](https://github.com/geetxnshgoyal/morph)** &nbsp;·&nbsp; [morph.geetanshgoyal.in](https://morph.geetanshgoyal.in) &nbsp;·&nbsp; on the [App Store](https://apps.apple.com/in/app/morph-file-converter/id6827647585), [Google Play](https://play.google.com/store/apps/details?id=app.morph) and the [Microsoft Store](https://apps.microsoft.com/detail/9PHWJVRC85DW)  
+A free file converter for macOS, Windows, iPhone and Android. Drag files anywhere, tap a key, and
+a wheel opens under the cursor with only the actions that make sense for them: convert, compress,
+resize, strip metadata, blur faces, extract text, merge PDFs. Everything runs on the device;
+nothing is uploaded.
 
-I'm a B.Tech CS student at Newton School of Technology in Bengaluru, and an
-[openSUSE Member](https://en.opensuse.org/openSUSE:Members) since February 2026.
-
-### What I've been building
+<p>
+  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-home.png" height="300" alt="Morph on iPhone: the home screen">
+  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-actions-dark.png" height="300" alt="Morph on iPhone: the actions for a file">
+  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-result.png" height="300" alt="Morph on iPhone: a converted result">
+</p>
 
 **[Uyuni MQTT + Node-RED](https://github.com/geetxnshgoyal/gsoc-2026-uyuni-mqtt)** &nbsp;·&nbsp; GSoC 2026, openSUSE  
-An MQTT event publisher in Uyuni's Java core, a documented topic scheme so consumers need to know
-nothing about Uyuni's internals, and a Node-RED node package so automations can be wired up
-visually. [RFC #119](https://github.com/uyuni-project/uyuni-rfc/pull/119) defined the design;
-[PR #12385](https://github.com/uyuni-project/uyuni/pull/12385) is +5,211 lines across 69 files,
-spanning the Java core, two container images and the node package. I also fixed
-[#11261](https://github.com/uyuni-project/uyuni/issues/11261), a duplicate-Salt-key bug after a
-Leap Micro to Tumbleweed migration. There's a
-[write-up on openSUSE News](https://news.opensuse.org/2026/09/03/gsoc-2026-uyuni-mqtt-nodered/).
-
-**Argus** &nbsp;·&nbsp; [live](https://argus-attendance.vercel.app) &nbsp;·&nbsp; private repo for now  
-College attendance that resists proxy attendance. The classroom QR rotates every three seconds, and
-the phone signs each scan with a hardware-backed key bound to that student and unlocked by their own
-face or fingerprint. Replays and other people's phones are rejected outright; softer signals like
-mock GPS only flag a scan for a spot check. Fastify and Postgres behind an OpenAPI contract, a React
-console for staff, a Flutter student app with native Kotlin and Swift for attestation.
+[Uyuni](https://www.uyuni-project.org/) knew the moment a machine registered or a Salt job came
+back, but none of it left the server, so automating on it meant polling an API and diffing. I added
+an MQTT event publisher to its Java core, a documented topic scheme, and a Node-RED node package.
+[RFC #119](https://github.com/uyuni-project/uyuni-rfc/pull/119) set the design;
+[PR #12385](https://github.com/uyuni-project/uyuni/pull/12385) is +5,211 lines across 69 files.
+[Write-up on openSUSE News](https://news.opensuse.org/2026/09/03/gsoc-2026-uyuni-mqtt-nodered/).
 
 **[Doorman](https://github.com/geetxnshgoyal/m5-StickC-plus2-doorman)** &nbsp;·&nbsp; [flash it from your browser](https://geetxnshgoyal.github.io/m5-StickC-plus2-doorman/)  
-Your smart bulb has no browser, so it will never clear a hotel captive portal. Doorman turns a cheap
-ESP32 into the doorman that signs it in: it handles the upstream association, WPA2-Enterprise
-included, and hands everything behind it a plain 2.4 GHz WPA2-PSK network. One login covers every
-device. C++, MIT licensed, installable from a web page with no toolchain.
+Smart bulbs have no browser, so they never clear a hotel captive portal. Doorman turns an ESP32
+into a bridge that signs in once, WPA2-Enterprise included, and gives every device behind it a
+plain WPA2-PSK network.
 
 **[RetroOS](https://github.com/geetxnshgoyal/Retro-OS)** &nbsp;·&nbsp; [try it](https://geetanshgoyal.in)  
-A tiling window manager and 2D desktop with no external dependencies — master-and-stack layout, four
-workspaces, a terminal with history and tab completion. It runs on the CRT inside the 3D room above.
+A tiling window manager and desktop in vanilla JavaScript with no dependencies: workspaces, a
+terminal with history and tab completion. It runs on a CRT inside a 3D room on my site.
 
-<img src="assets/retroos.jpg" alt="RetroOS: a tiling window manager with an about window and a projects window side by side" width="100%">
+### The record
 
-### A year of commits, eaten
+<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/activity.svg" alt="Activity recorder: contributions in the last 12 months, current and longest streak, merged pull requests, and a year heatmap" width="100%">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/snake.svg">
-  <img alt="A snake eating my GitHub contribution graph" src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/snake.svg" width="100%">
-</picture>
+<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/tree.svg" alt="A tree of commits: one limb per active season since 2021, foliage coloured by season" width="100%">
+
+<sub>Both cards are drawn by <a href="scripts/cards.py">scripts/cards.py</a> from public GitHub data and refreshed nightly.</sub>
 
 ### Elsewhere
 
-I competed at **ICPC Amritapuri 2025** as a regionalist, spoke at **openSUSE Conference 2026** in
-Nuremberg on getting started as a contributor, presented Bengaluru's bid to host **openSUSE.Asia
-Summit 2027** in Yogyakarta, and ran **DevForge**, my college's developer club, for a year.
-
-Mostly Java, TypeScript, Python and C++ these days, with Postgres underneath and a lot of time in
-other people's codebases.
+Spoke at **openSUSE Conference 2026** in Nuremberg, presented Bengaluru's bid to host
+**openSUSE.Asia Summit 2027** in Yogyakarta, [openSUSE Member](https://en.opensuse.org/openSUSE:Members)
+since February 2026, and ran **DevForge**, my college's developer club, for a year.
 
 [geetanshgoyal.in](https://geetanshgoyal.in) &nbsp;·&nbsp;
 [LinkedIn](https://www.linkedin.com/in/geetanshgoyal/) &nbsp;·&nbsp;
