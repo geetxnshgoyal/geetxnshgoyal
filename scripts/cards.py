@@ -237,16 +237,11 @@ SEASON_ORDER = ("winter", "spring", "summer", "autumn")
 SEASON_OF_MONTH = {m: SEASON_ORDER[(m % 12) // 3] for m in range(1, 13)}
 # palette, share of tips in leaf, leaves per tip, dot size
 FOLIAGE = {
-    "winter": (["#e5eff7", "#a9cbe0", "#88c0d0"], .5, 1, 3.0),
+    "winter": (["#a9cbe0", "#e5eff7", "#88c0d0"], .5, 1, 3.0),
     "spring": (["#f2b8cf", "#e88bb0", "#b9dd8f"], 1.0, 2, 3.3),
     "summer": (["#a3be8c", "#8fbf78", "#c6e79a"], 1.0, 3, 3.5),
     "autumn": (["#f0a35b", "#d97b4a", "#ebcb8b", "#bf616a"], .85, 2, 3.7),
 }
-# A plain bracketed L-system: X is a growing tip, F is wood.
-AXIOM, RULES = "X", {"X": "F[+X]F[-X]+X", "F": "FF"}
-BOUNDS = (24, 100, 876, 0)  # left, top, right; bottom is set per render
-
-
 def season_years(days, today):
     """[(year, {season: contributions})] from the first active year to now; winter starts in December."""
     totals = {}
@@ -258,37 +253,6 @@ def season_years(days, today):
         return []
     first, last = min(y for y, _ in totals), max(today.year + (today.month == 12), max(y for y, _ in totals))
     return [(y, {s: totals.get((y, s), 0) for s in SEASON_ORDER}) for y in range(first, last + 1)]
-
-
-def lsystem(n):
-    s = AXIOM
-    for _ in range(n):
-        s = "".join(RULES.get(ch, ch) for ch in s)
-    return s
-
-
-def turtle(program, heading, rnd):
-    """Walk the program in unit steps; returns wood segments (x1, y1, x2, y2, depth) and tip points."""
-    x = y = 0.0
-    depth, stack, segs, tips = 0, [], [], []
-    for ch in program:
-        if ch == "F":
-            if segs and rnd.random() < .3:  # skipped wood gives each bough its own shape
-                continue
-            heading += ((-90 - heading + 180) % 360 - 180) * .06  # lean towards the light
-            nx, ny = x + math.cos(math.radians(heading)), y + math.sin(math.radians(heading))
-            segs.append((x, y, nx, ny, depth))
-            x, y = nx, ny
-        elif ch == "X":
-            tips.append((x, y))
-        elif ch in "+-":
-            heading += (1 if ch == "+" else -1) * (24 + rnd.uniform(-9, 9))
-        elif ch == "[":
-            stack.append((x, y, heading, depth))
-            depth += 1
-        elif ch == "]":
-            x, y, heading, depth = stack.pop()
-    return segs, tips
 
 
 def ribbon(points, widths, fill):
@@ -303,149 +267,90 @@ def ribbon(points, widths, fill):
     return f'<path d="M{"L".join(left)}L{"L".join(reversed(right))}Z" fill="{fill}"/>'
 
 
-def bough(origin, heading, count, peak, season, girth, rnd, bounds):
-    ratio = math.log1p(count) / math.log1p(peak)
-    segs, tips = turtle(lsystem(3 + round(3 * ratio)), heading, rnd)
-    pts = [(s[0], s[1]) for s in segs] + [(s[2], s[3]) for s in segs]
-    scale = (36 + 130 * ratio) / max(math.hypot(x, y) for x, y in pts)
-    ox, oy = origin
-    left, top, right, bottom = bounds
-    for room, extent in ((ox - left, -min(x for x, _ in pts)), (right - ox, max(x for x, _ in pts)),
-                         (oy - top, -min(y for _, y in pts)), (bottom - oy, max(y for _, y in pts))):
-        if extent > 0:  # shrink rather than spill out of the frame
-            scale = min(scale, max(room - 6, 1) / extent)
-
-    def at(x, y):
-        return ox + x * scale, oy + y * scale
-
-    by_depth = {}
-    for x1, y1, x2, y2, d in segs:
-        (a, b), (c, e) = at(x1, y1), at(x2, y2)
-        by_depth.setdefault(d, []).append(f"M{a:.1f} {b:.1f}L{c:.1f} {e:.1f}")
-    out = [f'<g><title>{season}: {count:,} contributions</title>']
-    for d, cmds in sorted(by_depth.items()):
-        out.append(f'<path d="{"".join(cmds)}" stroke="#8f9bb8" stroke-width="{max(.5, girth * .8 * .7 ** d):.2f}" '
-                   'stroke-linecap="round" fill="none"/>')
-    palette, share, cluster, size = FOLIAGE[season]
-    dots = {}
-    for x, y in rnd.sample(tips, max(1, round(len(tips) * share))):
-        tx, ty = at(x, y)
-        for k in range(cluster):
-            spread = (1.5 + 2.5 * ratio) if k else 0
-            lx = min(max(tx + rnd.gauss(0, spread), left), right)
-            ly = min(max(ty + rnd.gauss(0, spread), top), bottom)
-            key = (rnd.choice(palette), rnd.choice((.8, 1.0, 1.3)))
-            dots.setdefault(key, []).append(f"M{lx:.1f} {ly:.1f}h0")
-    out.append('<g filter="url(#glow)" opacity=".92">')
-    for (colour, weight), d in sorted(dots.items()):
-        out.append(f'<path d="{"".join(d)}" stroke="{colour}" stroke-width="{size * weight * (.8 + .4 * ratio):.1f}" '
-                   'stroke-linecap="round"/>')
-    out.append("</g></g>")
-    return "".join(out)
-
-
 def tree_svg(p):
-    years = season_years(p["days"], p["today"])
-    w, h = 900, 660
-    base, crown, cx = h - 120, 290, w / 2
-    bounds = (BOUNDS[0], BOUNDS[1], BOUNDS[2], base - 8)
-    totals = [sum(s.values()) for _, s in years] or [0]
-    peak_year = max(totals) or 1
-    peak_season = max((c for _, s in years for c in s.values()), default=1) or 1
-    rnd = random.Random(years[0][0] if years else 0)
+    """The original recursive tree: one limb per active season, oldest low, newest high."""
+    limbs = [((y, s), c) for y, seasons in season_years(p["days"], p["today"]) for s, c in seasons.items() if c]
+    w, h = 900, 640
+    ground, top, cx = h - 70, 300, w / 2
+    peak = max((c for _, c in limbs), default=1)
+    groups, xs, ys = [], [cx], [ground]
 
-    # Trunk: a gently wandering line from the roots to the crown.
-    ys = [base - (base - crown) * i / 60 for i in range(61)]
-    trunk = [(cx + 7 * math.sin((base - y) / 75) - 4 * math.sin((base - y) / 31), y) for y in ys]
-    girth = [6 + 16 * ((y - crown) / (base - crown)) ** 1.4 + 14 * math.exp(-(base - y) / 14) for y in ys]
+    def branch(out, x, y, ang, length, width, depth, rnd, pal, density):
+        x2, y2 = x + math.cos(ang) * length, y - math.sin(ang) * length
+        out[0].append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke-width="{width:.2f}"/>')
+        xs.append(x2)
+        ys.append(y2)
+        if depth == 0 or length < 7:
+            for _ in range(density):
+                lx, ly, r = x2 + rnd.gauss(0, 9), y2 + rnd.gauss(0, 7), rnd.uniform(2.2, 4.4)
+                xs.extend((lx - r, lx + r))
+                ys.extend((ly - r, ly + r))
+                out[1].append(f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="{r:.1f}" fill="{rnd.choice(pal)}" '
+                              f'opacity="{rnd.uniform(.7, .95):.2f}"/>')
+            return
+        for spread in (rnd.uniform(.25, .55), -rnd.uniform(.25, .55)):
+            branch(out, x2, y2, ang + spread, length * rnd.uniform(.62, .78), width * .66, depth - 1, rnd, pal, density)
 
-    def trunk_at(y):
-        return min(trunk, key=lambda pt: abs(pt[1] - y))
-
-    parts = []
-    for angle, length, rw in ((195, 52, 10), (168, 32, 7), (-15, 56, 11), (12, 30, 7), (182, 22, 5)):
-        sx, ex = cx + math.cos(math.radians(angle)) * 6, cx + math.cos(math.radians(angle)) * length
-        line = [(sx + (ex - sx) * t, base - 10 + 14 * t + 4 * abs(math.sin(math.radians(angle))) * t * t) for t in
-                (i / 12 for i in range(13))]
-        parts.append(ribbon(line, [rw * (1 - i / 13) + .6 for i in range(13)], "url(#bark)"))
-    parts.append(ribbon(trunk, girth, "url(#bark)"))
-
-    n = len(years)
-    side, knots, limbs = -1, [], []
-    for i, ((year, seasons), total) in enumerate(zip(years, totals)):
-        frac = (i + 1) / (n + 1) if n > 1 else .5
-        y = base - 60 - frac * (base - 60 - crown - 20)
-        x, _ = trunk_at(y)
-        if not total:
-            knots.append(f'<ellipse cx="{x:.1f}" cy="{y:.1f}" rx="2.6" ry="3.8" fill="#4c566a" stroke="#8f9bb8" '
-                         f'stroke-width=".6"><title>{year}: no public contributions</title></ellipse>')
-            continue
-        side = -side
-        ratio = math.log1p(total) / math.log1p(peak_year)
-        leader = i == n - 1
-        lean = math.radians((10 if leader else 62 - 30 * frac) + rnd.uniform(-5, 5))
-        length = (60 + 120 * ratio) * (.45 if leader else 1 - .3 * frac)
-        end = (x + side * math.sin(lean) * length, y - math.cos(lean) * length)
-        ctrl = (x + side * math.sin(lean + .5) * length * .55, y - math.cos(lean + .5) * length * .55)
-        curve = [((1 - t) ** 2 * x + 2 * (1 - t) * t * ctrl[0] + t * t * end[0],
-                  (1 - t) ** 2 * y + 2 * (1 - t) * t * ctrl[1] + t * t * end[1]) for t in (k / 16 for k in range(17))]
-        thick = 2.5 + 5 * ratio
-        widths = [1 + (thick - 1) * (1 - k / 16) ** 1.2 for k in range(17)]
-        sway = random.Random(year * 31)
+    n = len(limbs)
+    for i, ((year, season), count) in enumerate(limbs):
+        rnd = random.Random(f"{year}{season}")
+        t = (i + 1) / (n + 1)
+        y = ground - 60 - t * (ground - 60 - top)
+        side = 1 if i % 2 else -1
+        scale = math.log1p(count) / math.log1p(peak)
+        ang = math.pi / 2 + side * (1.15 - 0.55 * t) + rnd.uniform(-.08, .08)
+        out = ([], [])
+        branch(out, cx, y, ang, (45 + 55 * scale) * (1.05 - 0.3 * t), 2 + 6 * scale, 3 + round(2 * scale),
+               rnd, FOLIAGE[season][0], 2 + round(4 * scale))
+        sway = random.Random(year * 7 + i)
         dur = 7 + sway.uniform(0, 3)
-        g = [f'<g class="limb" style="transform-origin:{x:.1f}px {y:.1f}px;animation-duration:{dur:.1f}s;'
-             f'animation-delay:-{sway.uniform(0, dur):.1f}s"><title>{year}: {total:,} public contributions</title>',
-             ribbon(curve, widths, "url(#limb)")]
-        active = [(s, c) for s, c in seasons.items() if c]
-        for slot, (season, count) in enumerate(active):
-            last = slot == len(active) - 1
-            k = 16 if last else round(16 * (.35 + .45 * slot / max(len(active) - 1, 1)))
-            (ax, ay), (bx, by) = curve[max(k - 1, 0)], curve[min(k + 1, 16)]
-            heading = math.degrees(math.atan2(by - ay, bx - ax))
-            if not last:
-                heading += (1 if slot % 2 else -1) * side * (52 + rnd.uniform(-6, 6))
-            g.append(bough(curve[k], heading, count, peak_season, season, widths[k],
-                           random.Random(f"{year}{season}"), bounds))
-        g.append("</g>")
-        limbs.append("".join(g))
-    parts += limbs + knots
+        groups.append(
+            f'<g class="limb" style="transform-origin:{cx}px {y:.1f}px;animation-duration:{dur:.1f}s;'
+            f'animation-delay:-{sway.uniform(0, dur):.1f}s"><title>{season} {year}: {count:,} contributions</title>'
+            f'<g stroke="#8f9bb8" stroke-linecap="round">{"".join(out[0])}</g>'
+            f'<g filter="url(#glow)">{"".join(out[1])}</g></g>'
+        )
 
-    total = sum(totals)
-    first_year = years[0][0] if years else p["today"].year
+    # Fit the whole crown inside the frame instead of clipping it: scale about the foot of the trunk.
+    frame_top, frame_l, frame_r = 104, 30, w - 30
+    fit = min(1, (ground - frame_top) / (ground - min(ys)),
+              (cx - frame_l) / max(cx - min(xs), 1), (frame_r - cx) / max(max(xs) - cx, 1))
+    trunk_pts = [(cx + 3 * math.sin((ground - yy) / 60), yy) for yy in (ground - (ground - top) * k / 30 for k in range(31))]
+    trunk_w = [5 + 17 * (1 - k / 30) ** 1.6 + 10 * math.exp(-k / 2.5) for k in range(31)]
+    roots = "".join(
+        ribbon([(cx + dx * k / 10, ground - 6 + abs(dx) * .1 * (k / 10) ** 2) for k in range(11)],
+               [rw * (1 - k / 11) + .6 for k in range(11)], "url(#bark)")
+        for dx, rw in ((-50, 9), (-28, 6), (46, 9), (26, 6))
+    )
+    total = sum(c for _, c in limbs)
+    first_year = limbs[0][0][0] if limbs else p["today"].year
     legend = "".join(
-        f'<circle cx="{44 + i * 110}" cy="{base + 44}" r="4.5" fill="{FOLIAGE[s][0][0 if s != "winter" else 1]}"/>'
-        f'<text x="{56 + i * 110}" y="{base + 48}" font-size="12" fill="#d8dee9">{s}</text>'
+        f'<circle cx="{60 + i * 120}" cy="{h - 30}" r="5" fill="{FOLIAGE[s][0][0]}"/>'
+        f'<text x="{72 + i * 120}" y="{h - 26}" font-size="13" fill="#d9dee8">{s}</text>'
         for i, s in enumerate(SEASON_ORDER)
     )
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img">'
-        f'<title>A tree of commits: {total:,} public contributions since {first_year}</title>'
-        '<desc>Each active season-year is a limb, oldest at the roots and newest in the crown. Each season in that '
-        'year grows its own bough and foliage; empty years are knots in the trunk. Winter starts in December.</desc>'
-        '<defs><linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#5e6a85"/>'
-        '<stop offset=".55" stop-color="#9aa6c0"/><stop offset="1" stop-color="#5e6a85"/></linearGradient>'
-        '<linearGradient id="limb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa6c0"/>'
-        '<stop offset="1" stop-color="#76839f"/></linearGradient>'
-        '<linearGradient id="aurora" x1="0" x2="1"><stop offset="0" stop-color="#bf616a"/>'
-        '<stop offset=".25" stop-color="#d08770"/><stop offset=".5" stop-color="#ebcb8b"/>'
-        '<stop offset=".75" stop-color="#a3be8c"/><stop offset="1" stop-color="#b48ead"/></linearGradient>'
-        '<filter id="glow"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/>'
+        f'<title>A tree of {total:,} public contributions, one limb per active season</title>'
+        '<defs><linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#6b7792"/>'
+        '<stop offset=".55" stop-color="#a3aec6"/><stop offset="1" stop-color="#6b7792"/></linearGradient>'
+        '<radialGradient id="halo" cx=".5" cy=".55" r=".5"><stop offset="0" stop-color="#3b4252"/>'
+        '<stop offset="1" stop-color="#2e3440" stop-opacity="0"/></radialGradient>'
+        '<filter id="glow"><feGaussianBlur stdDeviation=".7" result="b"/><feMerge><feMergeNode in="b"/>'
         '<feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
-        '<style>@keyframes sway{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.6deg)}}'
+        '<style>@keyframes sway{0%,100%{transform:rotate(-.7deg)}50%{transform:rotate(.7deg)}}'
         '.limb{animation:sway 8s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.limb{animation:none}}</style>'
         f'<rect width="{w}" height="{h}" rx="16" fill="#2e3440"/>'
+        f'<ellipse cx="{cx}" cy="{(ground + frame_top) / 2 + 20:.0f}" rx="330" ry="250" fill="url(#halo)"/>'
         f'<g font-family="{MONO}">'
-        '<text x="40" y="52" font-size="22" font-weight="700" fill="#eceff4" letter-spacing="2">A TREE OF COMMITS</text>'
-        '<text x="40" y="76" font-size="12" fill="#a3adc2">Every active season-year grows a limb, '
-        'with foliage for its seasons.</text>'
-        f'<path d="M16 {base + 6}Q{w * .2:.0f} {base - 16} {w * .45:.0f} {base - 4}T{w - 16} {base + 4}V{base + 20}H16Z" '
-        'fill="#3b4252" opacity=".7"/>'
-        f'<rect x="16" y="{base + 18}" width="{w - 32}" height="2" fill="url(#aurora)" opacity=".7"/>'
-        f'{"".join(parts)}{legend}'
-        f'<text x="40" y="{base + 78}" font-size="10.5" fill="#7f8aa3">Oldest at the roots, newest in the crown. '
-        f'Size follows activity on a log scale. {total:,} public contributions since {first_year}.</text>'
-        f'<text x="40" y="{base + 96}" font-size="10.5" fill="#7f8aa3">Winter begins the previous December; '
-        f'empty years are knots. Refreshed {p["today"]:%Y-%m-%d}.</text>'
+        '<text x="40" y="52" font-size="24" font-weight="700" fill="#eceff4" letter-spacing="2">A TREE OF COMMITS</text>'
+        f'<text x="40" y="78" font-size="13" fill="#a3adc2">{n} active seasons since {first_year}, '
+        f'{total:,} public contributions. Oldest at the roots, newest in the crown.</text>'
+        f'<ellipse cx="{cx}" cy="{ground + 4}" rx="360" ry="16" fill="#3b4252"/>'
+        f'<g transform="translate({cx} {ground}) scale({fit:.3f}) translate({-cx} {-ground})">'
+        f'{roots}{"".join(groups)}{ribbon(trunk_pts, trunk_w, "url(#bark)")}</g>'
+        f'<line x1="40" y1="{h - 52}" x2="{w - 40}" y2="{h - 52}" stroke="#434c5e"/>{legend}'
+        f'<text x="{w - 40}" y="{h - 26}" font-size="11" fill="#7f8aa3" text-anchor="end">refreshed {p["today"]:%Y-%m-%d}</text>'
         "</g></svg>"
     )
 
@@ -516,7 +421,7 @@ def main():
     os.makedirs(out, exist_ok=True)
     p = fetch(login)
     assert p["days"], "no contribution data returned"
-    for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("commit-tree", tree_svg)):
+    for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("garden", tree_svg)):
         with open(os.path.join(out, f"{name}.svg"), "w") as f:
             f.write(fn(p))
     for project in PROJECTS:
@@ -524,7 +429,7 @@ def main():
             f.write(project_svg(p, project))
     with open(os.path.join(out, "history.json"), "w") as f:
         json.dump([{"year": y, "seasons": s} for y, s in season_years(p["days"], p["today"])], f, indent=1)
-    print(f"wrote {out}/activity.svg profile.svg commit-tree.svg ({len(p['days'])} days)")
+    print(f"wrote {out}/activity.svg profile.svg garden.svg ({len(p['days'])} days)")
 
 
 if __name__ == "__main__":
