@@ -33,7 +33,7 @@ School of Technology in Bengaluru.
 
 <img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/activity.svg?v=3" alt="Activity recorder: contributions in the last 12 months, current and longest streak, merged pull requests, and a year heatmap" width="100%">
 
-<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/tree.svg?v=3" alt="A tree of commits: one limb per active season since 2021, foliage coloured by season" width="100%">
+<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/commit-tree.svg" alt="A tree of commits: one limb per active season since 2021, foliage coloured by season" width="100%">
 
 <sub>Both cards are drawn by <a href="scripts/cards.py">scripts/cards.py</a> from public GitHub data and refreshed nightly.</sub>
 

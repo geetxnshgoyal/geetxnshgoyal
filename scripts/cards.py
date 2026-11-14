@@ -516,7 +516,7 @@ def main():
     os.makedirs(out, exist_ok=True)
     p = fetch(login)
     assert p["days"], "no contribution data returned"
-    for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("tree", tree_svg)):
+    for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("commit-tree", tree_svg)):
         with open(os.path.join(out, f"{name}.svg"), "w") as f:
             f.write(fn(p))
     for project in PROJECTS:
@@ -524,7 +524,7 @@ def main():
             f.write(project_svg(p, project))
     with open(os.path.join(out, "history.json"), "w") as f:
         json.dump([{"year": y, "seasons": s} for y, s in season_years(p["days"], p["today"])], f, indent=1)
-    print(f"wrote {out}/activity.svg profile.svg tree.svg ({len(p['days'])} days)")
+    print(f"wrote {out}/activity.svg profile.svg commit-tree.svg ({len(p['days'])} days)")
 
 
 if __name__ == "__main__":
