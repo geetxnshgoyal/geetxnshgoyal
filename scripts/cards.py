@@ -35,7 +35,7 @@ def fetch(login):
         """query($l:String!){user(login:$l){name login avatarUrl location company createdAt
         followers{totalCount}
         repositories(first:100,ownerAffiliations:OWNER,privacy:PUBLIC,isFork:false){totalCount
-          nodes{stargazerCount languages(first:5,orderBy:{field:SIZE,direction:DESC}){edges{size node{name}}}}}}}""",
+          nodes{name stargazerCount primaryLanguage{name} languages(first:5,orderBy:{field:SIZE,direction:DESC}){edges{size node{name}}}}}}}""",
         l=login,
     )["user"]
     prs = gql(
@@ -82,6 +82,8 @@ def fetch(login):
         "language": max(langs, key=langs.get) if langs else "",
         "merged_prs": prs,
         "avatar": avatar,
+        "repo_info": {r["name"]: (r["stargazerCount"], (r["primaryLanguage"] or {}).get("name", ""))
+                      for r in u["repositories"]["nodes"]},
         "days": days,
         "today": now.date(),
     }
@@ -231,85 +233,282 @@ def profile_svg(p):
     return paper(w, h, body, f'GitHub profile of {p["name"]} (@{p["login"]})')
 
 
-SEASONS = {  # name: (months, palette)
-    "winter": ((12, 1, 2), ["#cfe3f0", "#a9cbe0", "#ffffff"]),
-    "spring": ((3, 4, 5), ["#f2b8cf", "#e88bb0", "#b9dd8f"]),
-    "summer": ((6, 7, 8), ["#9fd27a", "#6fb85a", "#c6e79a"]),
-    "autumn": ((9, 10, 11), ["#f0a35b", "#e2703f", "#f3c969", "#c94f3a"]),
+SEASON_ORDER = ("winter", "spring", "summer", "autumn")
+SEASON_OF_MONTH = {m: SEASON_ORDER[(m % 12) // 3] for m in range(1, 13)}
+# palette, share of tips in leaf, leaves per tip, dot size
+FOLIAGE = {
+    "winter": (["#e5eff7", "#a9cbe0", "#88c0d0"], .5, 1, 3.0),
+    "spring": (["#f2b8cf", "#e88bb0", "#b9dd8f"], 1.0, 2, 3.3),
+    "summer": (["#a3be8c", "#8fbf78", "#c6e79a"], 1.0, 3, 3.5),
+    "autumn": (["#f0a35b", "#d97b4a", "#ebcb8b", "#bf616a"], .85, 2, 3.7),
 }
+# A plain bracketed L-system: X is a growing tip, F is wood.
+AXIOM, RULES = "X", {"X": "F[+X]F[-X]+X", "F": "FF"}
+BOUNDS = (24, 100, 876, 0)  # left, top, right; bottom is set per render
 
 
-def season_years(days):
+def season_years(days, today):
+    """[(year, {season: contributions})] from the first active year to now; winter starts in December."""
     totals = {}
     for d, c in days.items():
-        if not c:
-            continue
-        name = next(n for n, (ms, _) in SEASONS.items() if d.month in ms)
-        year = d.year + 1 if d.month == 12 else d.year  # winter starts the previous December
-        totals[(year, name)] = totals.get((year, name), 0) + c
-    order = list(SEASONS)
-    return sorted(totals.items(), key=lambda kv: (kv[0][0], order.index(kv[0][1])))
+        if c:
+            key = (d.year + (d.month == 12), SEASON_OF_MONTH[d.month])
+            totals[key] = totals.get(key, 0) + c
+    if not totals:
+        return []
+    first, last = min(y for y, _ in totals), max(today.year + (today.month == 12), max(y for y, _ in totals))
+    return [(y, {s: totals.get((y, s), 0) for s in SEASON_ORDER}) for y in range(first, last + 1)]
+
+
+def lsystem(n):
+    s = AXIOM
+    for _ in range(n):
+        s = "".join(RULES.get(ch, ch) for ch in s)
+    return s
+
+
+def turtle(program, heading, rnd):
+    """Walk the program in unit steps; returns wood segments (x1, y1, x2, y2, depth) and tip points."""
+    x = y = 0.0
+    depth, stack, segs, tips = 0, [], [], []
+    for ch in program:
+        if ch == "F":
+            if segs and rnd.random() < .3:  # skipped wood gives each bough its own shape
+                continue
+            heading += ((-90 - heading + 180) % 360 - 180) * .06  # lean towards the light
+            nx, ny = x + math.cos(math.radians(heading)), y + math.sin(math.radians(heading))
+            segs.append((x, y, nx, ny, depth))
+            x, y = nx, ny
+        elif ch == "X":
+            tips.append((x, y))
+        elif ch in "+-":
+            heading += (1 if ch == "+" else -1) * (24 + rnd.uniform(-9, 9))
+        elif ch == "[":
+            stack.append((x, y, heading, depth))
+            depth += 1
+        elif ch == "]":
+            x, y, heading, depth = stack.pop()
+    return segs, tips
+
+
+def ribbon(points, widths, fill):
+    """A filled outline of a polyline with a width at each point."""
+    left, right = [], []
+    for i, (x, y) in enumerate(points):
+        (ax, ay), (bx, by) = points[max(i - 1, 0)], points[min(i + 1, len(points) - 1)]
+        n = math.hypot(bx - ax, by - ay) or 1
+        ox, oy = -(by - ay) / n * widths[i] / 2, (bx - ax) / n * widths[i] / 2
+        left.append(f"{x + ox:.1f} {y + oy:.1f}")
+        right.append(f"{x - ox:.1f} {y - oy:.1f}")
+    return f'<path d="M{"L".join(left)}L{"L".join(reversed(right))}Z" fill="{fill}"/>'
+
+
+def bough(origin, heading, count, peak, season, girth, rnd, bounds):
+    ratio = math.log1p(count) / math.log1p(peak)
+    segs, tips = turtle(lsystem(3 + round(3 * ratio)), heading, rnd)
+    pts = [(s[0], s[1]) for s in segs] + [(s[2], s[3]) for s in segs]
+    scale = (36 + 130 * ratio) / max(math.hypot(x, y) for x, y in pts)
+    ox, oy = origin
+    left, top, right, bottom = bounds
+    for room, extent in ((ox - left, -min(x for x, _ in pts)), (right - ox, max(x for x, _ in pts)),
+                         (oy - top, -min(y for _, y in pts)), (bottom - oy, max(y for _, y in pts))):
+        if extent > 0:  # shrink rather than spill out of the frame
+            scale = min(scale, max(room - 6, 1) / extent)
+
+    def at(x, y):
+        return ox + x * scale, oy + y * scale
+
+    by_depth = {}
+    for x1, y1, x2, y2, d in segs:
+        (a, b), (c, e) = at(x1, y1), at(x2, y2)
+        by_depth.setdefault(d, []).append(f"M{a:.1f} {b:.1f}L{c:.1f} {e:.1f}")
+    out = [f'<g><title>{season}: {count:,} contributions</title>']
+    for d, cmds in sorted(by_depth.items()):
+        out.append(f'<path d="{"".join(cmds)}" stroke="#8f9bb8" stroke-width="{max(.5, girth * .8 * .7 ** d):.2f}" '
+                   'stroke-linecap="round" fill="none"/>')
+    palette, share, cluster, size = FOLIAGE[season]
+    dots = {}
+    for x, y in rnd.sample(tips, max(1, round(len(tips) * share))):
+        tx, ty = at(x, y)
+        for k in range(cluster):
+            spread = (1.5 + 2.5 * ratio) if k else 0
+            lx = min(max(tx + rnd.gauss(0, spread), left), right)
+            ly = min(max(ty + rnd.gauss(0, spread), top), bottom)
+            key = (rnd.choice(palette), rnd.choice((.8, 1.0, 1.3)))
+            dots.setdefault(key, []).append(f"M{lx:.1f} {ly:.1f}h0")
+    out.append('<g filter="url(#glow)" opacity=".92">')
+    for (colour, weight), d in sorted(dots.items()):
+        out.append(f'<path d="{"".join(d)}" stroke="{colour}" stroke-width="{size * weight * (.8 + .4 * ratio):.1f}" '
+                   'stroke-linecap="round"/>')
+    out.append("</g></g>")
+    return "".join(out)
 
 
 def tree_svg(p):
-    limbs = season_years(p["days"])
-    w, h = 900, 640
-    ground, top = h - 70, 300
-    cx = w / 2
-    peak = max(c for _, c in limbs)
-    lines, leaves = [], []
-    trunk_w = 22
+    years = season_years(p["days"], p["today"])
+    w, h = 900, 660
+    base, crown, cx = h - 120, 290, w / 2
+    bounds = (BOUNDS[0], BOUNDS[1], BOUNDS[2], base - 8)
+    totals = [sum(s.values()) for _, s in years] or [0]
+    peak_year = max(totals) or 1
+    peak_season = max((c for _, s in years for c in s.values()), default=1) or 1
+    rnd = random.Random(years[0][0] if years else 0)
 
-    def branch(x, y, ang, length, width, depth, rnd, pal, density):
-        x2, y2 = x + math.cos(ang) * length, y - math.sin(ang) * length
-        lines.append(f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke-width="{width:.2f}"/>')
-        if depth == 0 or length < 7:
-            for _ in range(density):
-                r = rnd.uniform(2.2, 4.4)
-                leaves.append(
-                    f'<circle cx="{x2 + rnd.gauss(0, 9):.1f}" cy="{y2 + rnd.gauss(0, 7):.1f}" r="{r:.1f}" '
-                    f'fill="{rnd.choice(pal)}" opacity="{rnd.uniform(.65, .95):.2f}"/>'
-                )
-            return
-        for spread in (rnd.uniform(.25, .55), -rnd.uniform(.25, .55)):
-            branch(x2, y2, ang + spread, length * rnd.uniform(.62, .78), width * .66, depth - 1, rnd, pal, density)
+    # Trunk: a gently wandering line from the roots to the crown.
+    ys = [base - (base - crown) * i / 60 for i in range(61)]
+    trunk = [(cx + 7 * math.sin((base - y) / 75) - 4 * math.sin((base - y) / 31), y) for y in ys]
+    girth = [6 + 16 * ((y - crown) / (base - crown)) ** 1.4 + 14 * math.exp(-(base - y) / 14) for y in ys]
 
-    n = len(limbs)
-    for i, ((year, season), count) in enumerate(limbs):
-        rnd = random.Random(f"{year}{season}")
-        t = (i + 1) / (n + 1)
-        y = ground - 60 - t * (ground - 60 - top)
-        side = 1 if i % 2 else -1
-        scale = math.log1p(count) / math.log1p(peak)
-        ang = math.pi / 2 + side * (1.15 - 0.55 * t) + rnd.uniform(-.08, .08)
-        length = (45 + 55 * scale) * (1.05 - 0.3 * t)
-        depth = 3 + round(2 * scale)
-        branch(cx, y, ang, length, 2 + 6 * scale, depth, rnd, SEASONS[season][1], 2 + round(4 * scale))
-    trunk = (
-        f'<path d="M{cx - trunk_w} {ground} C{cx - 8} {ground - 120} {cx - 4} {top + 80} {cx - 2} {top} '
-        f'L{cx + 2} {top} C{cx + 4} {top + 80} {cx + 8} {ground - 120} {cx + trunk_w} {ground} Z" fill="#8f9bb8"/>'
-    )
-    first_year = limbs[0][0][0] if limbs else p["today"].year
+    def trunk_at(y):
+        return min(trunk, key=lambda pt: abs(pt[1] - y))
+
+    parts = []
+    for angle, length, rw in ((195, 52, 10), (168, 32, 7), (-15, 56, 11), (12, 30, 7), (182, 22, 5)):
+        sx, ex = cx + math.cos(math.radians(angle)) * 6, cx + math.cos(math.radians(angle)) * length
+        line = [(sx + (ex - sx) * t, base - 10 + 14 * t + 4 * abs(math.sin(math.radians(angle))) * t * t) for t in
+                (i / 12 for i in range(13))]
+        parts.append(ribbon(line, [rw * (1 - i / 13) + .6 for i in range(13)], "url(#bark)"))
+    parts.append(ribbon(trunk, girth, "url(#bark)"))
+
+    n = len(years)
+    side, knots, limbs = -1, [], []
+    for i, ((year, seasons), total) in enumerate(zip(years, totals)):
+        frac = (i + 1) / (n + 1) if n > 1 else .5
+        y = base - 60 - frac * (base - 60 - crown - 20)
+        x, _ = trunk_at(y)
+        if not total:
+            knots.append(f'<ellipse cx="{x:.1f}" cy="{y:.1f}" rx="2.6" ry="3.8" fill="#4c566a" stroke="#8f9bb8" '
+                         f'stroke-width=".6"><title>{year}: no public contributions</title></ellipse>')
+            continue
+        side = -side
+        ratio = math.log1p(total) / math.log1p(peak_year)
+        leader = i == n - 1
+        lean = math.radians((10 if leader else 62 - 30 * frac) + rnd.uniform(-5, 5))
+        length = (60 + 120 * ratio) * (.45 if leader else 1 - .3 * frac)
+        end = (x + side * math.sin(lean) * length, y - math.cos(lean) * length)
+        ctrl = (x + side * math.sin(lean + .5) * length * .55, y - math.cos(lean + .5) * length * .55)
+        curve = [((1 - t) ** 2 * x + 2 * (1 - t) * t * ctrl[0] + t * t * end[0],
+                  (1 - t) ** 2 * y + 2 * (1 - t) * t * ctrl[1] + t * t * end[1]) for t in (k / 16 for k in range(17))]
+        thick = 2.5 + 5 * ratio
+        widths = [1 + (thick - 1) * (1 - k / 16) ** 1.2 for k in range(17)]
+        sway = random.Random(year * 31)
+        dur = 7 + sway.uniform(0, 3)
+        g = [f'<g class="limb" style="transform-origin:{x:.1f}px {y:.1f}px;animation-duration:{dur:.1f}s;'
+             f'animation-delay:-{sway.uniform(0, dur):.1f}s"><title>{year}: {total:,} public contributions</title>',
+             ribbon(curve, widths, "url(#limb)")]
+        active = [(s, c) for s, c in seasons.items() if c]
+        for slot, (season, count) in enumerate(active):
+            last = slot == len(active) - 1
+            k = 16 if last else round(16 * (.35 + .45 * slot / max(len(active) - 1, 1)))
+            (ax, ay), (bx, by) = curve[max(k - 1, 0)], curve[min(k + 1, 16)]
+            heading = math.degrees(math.atan2(by - ay, bx - ax))
+            if not last:
+                heading += (1 if slot % 2 else -1) * side * (52 + rnd.uniform(-6, 6))
+            g.append(bough(curve[k], heading, count, peak_season, season, widths[k],
+                           random.Random(f"{year}{season}"), bounds))
+        g.append("</g>")
+        limbs.append("".join(g))
+    parts += limbs + knots
+
+    total = sum(totals)
+    first_year = years[0][0] if years else p["today"].year
     legend = "".join(
-        f'<circle cx="{60 + i * 120}" cy="{h - 30}" r="5" fill="{pal[0]}"/>'
-        f'<text x="{72 + i * 120}" y="{h - 26}" font-size="13" fill="#d9dee8">{name}</text>'
-        for i, (name, (_, pal)) in enumerate(SEASONS.items())
+        f'<circle cx="{44 + i * 110}" cy="{base + 44}" r="4.5" fill="{FOLIAGE[s][0][0 if s != "winter" else 1]}"/>'
+        f'<text x="{56 + i * 110}" y="{base + 48}" font-size="12" fill="#d8dee9">{s}</text>'
+        for i, s in enumerate(SEASON_ORDER)
     )
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img">'
-        f'<title>A tree of {sum(p["days"].values()):,} public contributions, one limb per active season</title>'
-        f'<defs><clipPath id="frame"><rect x="0" y="96" width="{w}" height="{h - 150}"/></clipPath></defs>'
+        f'<title>A tree of commits: {total:,} public contributions since {first_year}</title>'
+        '<desc>Each active season-year is a limb, oldest at the roots and newest in the crown. Each season in that '
+        'year grows its own bough and foliage; empty years are knots in the trunk. Winter starts in December.</desc>'
+        '<defs><linearGradient id="bark" x1="0" x2="1"><stop offset="0" stop-color="#5e6a85"/>'
+        '<stop offset=".55" stop-color="#9aa6c0"/><stop offset="1" stop-color="#5e6a85"/></linearGradient>'
+        '<linearGradient id="limb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9aa6c0"/>'
+        '<stop offset="1" stop-color="#76839f"/></linearGradient>'
+        '<linearGradient id="aurora" x1="0" x2="1"><stop offset="0" stop-color="#bf616a"/>'
+        '<stop offset=".25" stop-color="#d08770"/><stop offset=".5" stop-color="#ebcb8b"/>'
+        '<stop offset=".75" stop-color="#a3be8c"/><stop offset="1" stop-color="#b48ead"/></linearGradient>'
+        '<filter id="glow"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/>'
+        '<feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
+        '<style>@keyframes sway{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.6deg)}}'
+        '.limb{animation:sway 8s ease-in-out infinite}@media(prefers-reduced-motion:reduce){.limb{animation:none}}</style>'
         f'<rect width="{w}" height="{h}" rx="16" fill="#2e3440"/>'
         f'<g font-family="{MONO}">'
-        f'<text x="40" y="52" font-size="24" font-weight="700" fill="#eceff4" letter-spacing="2">A TREE OF COMMITS</text>'
-        f'<text x="40" y="78" font-size="13" fill="#a3adc2">{len(limbs)} active seasons since {first_year}, '
-        f'{sum(p["days"].values()):,} public contributions. Oldest at the roots, newest in the crown.</text>'
-        f'<ellipse cx="{cx}" cy="{ground + 4}" rx="360" ry="16" fill="#3b4252"/>'
-        f'<g clip-path="url(#frame)"><g stroke="#8f9bb8" stroke-linecap="round">{"".join(lines)}</g>{trunk}{"".join(leaves)}</g>'
-        f'<line x1="40" y1="{h - 52}" x2="{w - 40}" y2="{h - 52}" stroke="#434c5e"/>{legend}'
-        f'<text x="{w - 40}" y="{h - 26}" font-size="11" fill="#7f8aa3" text-anchor="end">refreshed {p["today"]:%Y-%m-%d}</text>'
-        f"</g></svg>"
+        '<text x="40" y="52" font-size="22" font-weight="700" fill="#eceff4" letter-spacing="2">A TREE OF COMMITS</text>'
+        '<text x="40" y="76" font-size="12" fill="#a3adc2">Every active season-year grows a limb, '
+        'with foliage for its seasons.</text>'
+        f'<path d="M16 {base + 6}Q{w * .2:.0f} {base - 16} {w * .45:.0f} {base - 4}T{w - 16} {base + 4}V{base + 20}H16Z" '
+        'fill="#3b4252" opacity=".7"/>'
+        f'<rect x="16" y="{base + 18}" width="{w - 32}" height="2" fill="url(#aurora)" opacity=".7"/>'
+        f'{"".join(parts)}{legend}'
+        f'<text x="40" y="{base + 78}" font-size="10.5" fill="#7f8aa3">Oldest at the roots, newest in the crown. '
+        f'Size follows activity on a log scale. {total:,} public contributions since {first_year}.</text>'
+        f'<text x="40" y="{base + 96}" font-size="10.5" fill="#7f8aa3">Winter begins the previous December; '
+        f'empty years are knots. Refreshed {p["today"]:%Y-%m-%d}.</text>'
+        "</g></svg>"
     )
+
+
+PROJECTS = [  # slug, repo, kicker, title, blurb, highlight, accent
+    ("morph", "morph", "FILE CONVERTER / 4 PLATFORMS", "Morph",
+     "Drop any file, tap a key, and a wheel of the actions that fit it opens under the cursor. "
+     "Convert, compress, blur faces, merge PDFs. All on device.",
+     "App Store / Play / MS Store", "#88c0d0"),
+    ("uyuni", "gsoc-2026-uyuni-mqtt", "GSOC 2026 / OPENSUSE", "Uyuni MQTT",
+     "Live MQTT events from Uyuni's Java core and a Node-RED node package, "
+     "so automations react to registrations and Salt jobs instead of polling.",
+     "+5,211 lines / 69 files", "#a3be8c"),
+    ("doorman", "m5-StickC-plus2-doorman", "ESP32 FIRMWARE", "Doorman",
+     "Signs in to a hotel or campus captive portal once, WPA2-Enterprise included, "
+     "and shares a plain network with every smart device behind it.",
+     "flash it from the browser", "#ebcb8b"),
+    ("retroos", "Retro-OS", "VANILLA JS / ZERO DEPS", "RetroOS",
+     "A tiling window manager and desktop with workspaces and a real terminal, "
+     "running on a CRT inside a 3D room.",
+     "live on geetanshgoyal.in", "#b48ead"),
+]
+
+
+def wrap(text, width):
+    lines, line = [], ""
+    for word in text.split():
+        if line and len(line) + 1 + len(word) > width:
+            lines.append(line)
+            line = word
+        else:
+            line = f"{line} {word}".strip()
+    return lines + [line]
+
+
+def project_svg(p, project):
+    _, repo, kicker, title, blurb, highlight, accent = project
+    stars, lang = p["repo_info"].get(repo, (0, ""))
+    lang = {"uyuni": "Java"}.get(project[0], lang)  # that repo is mostly docs; the PR itself is Java
+    w, h = 440, 250
+    body = "".join(
+        f'<text x="28" y="{118 + i * 21}" font-size="13" fill="#d8dee9">{escape(line)}</text>'
+        for i, line in enumerate(wrap(blurb, 50)[:4])
+    )
+    chips, x = [], 28
+    for label in [c for c in (lang, f"\u2605 {stars}" if stars else "", highlight) if c]:
+        cw = 7.3 * len(label) + 20
+        chips.append(f'<rect x="{x}" y="{h - 46}" width="{cw:.0f}" height="24" rx="12" fill="none" stroke="#4c566a"/>'
+                     f'<text x="{x + cw / 2:.0f}" y="{h - 29}" font-size="11.5" fill="#a3adc2" '
+                     f'text-anchor="middle">{escape(label)}</text>')
+        x += cw + 8
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w} {h}" width="{w}" height="{h}" role="img">'
+        f'<title>{escape(title)}: {escape(blurb)}</title>'
+        f'<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="14" fill="#2e3440" stroke="#3b4252"/>'
+        f'<rect x="0" y="22" width="5" height="54" rx="2" fill="{accent}"/>'
+        f'<g font-family="{MONO}">'
+        f'<text x="28" y="40" font-size="11" letter-spacing="1.5" fill="{accent}">{escape(kicker)}</text>'
+        f'<text x="28" y="76" font-size="26" font-weight="700" fill="#eceff4">{escape(title)}</text>'
+        f'<text x="{w - 26}" y="40" font-size="16" fill="#4c566a" text-anchor="end">\u2197</text>'
+        f'{body}{"".join(chips)}</g></svg>'
+    )
+
 
 
 def main():
@@ -320,6 +519,11 @@ def main():
     for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("tree", tree_svg)):
         with open(os.path.join(out, f"{name}.svg"), "w") as f:
             f.write(fn(p))
+    for project in PROJECTS:
+        with open(os.path.join(out, f"project-{project[0]}.svg"), "w") as f:
+            f.write(project_svg(p, project))
+    with open(os.path.join(out, "history.json"), "w") as f:
+        json.dump([{"year": y, "seasons": s} for y, s in season_years(p["days"], p["today"])], f, indent=1)
     print(f"wrote {out}/activity.svg profile.svg tree.svg ({len(p['days'])} days)")
 
 
@@ -328,4 +532,7 @@ if __name__ == "__main__":
     t = dt.date(2026, 1, 10)
     assert streaks({t - dt.timedelta(days=i): 1 for i in range(1, 4)}, t) == (3, 3)
     assert streaks({t: 0, t - dt.timedelta(days=5): 2}, t) == (0, 1)
+    # December counts towards the next year's winter.
+    assert season_years({dt.date(2025, 12, 5): 3, dt.date(2026, 4, 1): 1}, t) == [
+        (2026, {"winter": 3, "spring": 1, "summer": 0, "autumn": 0})]
     main()
