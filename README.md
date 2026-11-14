@@ -6,34 +6,34 @@ School of Technology in Bengaluru.
 
 ### What I've built
 
-**[Morph](https://github.com/geetxnshgoyal/morph)** &nbsp;·&nbsp; [morph.geetanshgoyal.in](https://morph.geetanshgoyal.in) &nbsp;·&nbsp; on the [App Store](https://apps.apple.com/in/app/morph-file-converter/id6827647585), [Google Play](https://play.google.com/store/apps/details?id=app.morph) and the [Microsoft Store](https://apps.microsoft.com/detail/9PHWJVRC85DW)  
-A free file converter for macOS, Windows, iPhone and Android. Drag files anywhere, tap a key, and
-a wheel opens under the cursor with only the actions that make sense for them: convert, compress,
-resize, strip metadata, blur faces, extract text, merge PDFs. Everything runs on the device;
-nothing is uploaded.
+<table>
+<tr>
+<td width="50%" valign="top">
+<a href="https://github.com/geetxnshgoyal/morph"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/project-morph.svg" alt="Morph: a free on-device file converter for macOS, Windows, iPhone and Android" width="100%"></a><br>
+<sub><a href="https://morph.geetanshgoyal.in">website</a> · <a href="https://apps.apple.com/in/app/morph-file-converter/id6827647585">App Store</a> · <a href="https://play.google.com/store/apps/details?id=app.morph">Google Play</a> · <a href="https://apps.microsoft.com/detail/9PHWJVRC85DW">Microsoft Store</a></sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://github.com/geetxnshgoyal/gsoc-2026-uyuni-mqtt"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/project-uyuni.svg" alt="Uyuni MQTT + Node-RED: Google Summer of Code 2026 with openSUSE" width="100%"></a><br>
+<sub><a href="https://github.com/uyuni-project/uyuni-rfc/pull/119">RFC #119</a> · <a href="https://github.com/uyuni-project/uyuni/pull/12385">PR #12385</a> · <a href="https://news.opensuse.org/2026/09/03/gsoc-2026-uyuni-mqtt-nodered/">openSUSE News write-up</a></sub>
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+<a href="https://github.com/geetxnshgoyal/m5-StickC-plus2-doorman"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/project-doorman.svg" alt="Doorman: an ESP32 bridge that clears captive portals for smart devices" width="100%"></a><br>
+<sub><a href="https://geetxnshgoyal.github.io/m5-StickC-plus2-doorman/">flash it from your browser</a></sub>
+</td>
+<td width="50%" valign="top">
+<a href="https://github.com/geetxnshgoyal/Retro-OS"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/project-retroos.svg" alt="RetroOS: a tiling desktop in vanilla JavaScript" width="100%"></a><br>
+<sub><a href="https://geetanshgoyal.in">try it on geetanshgoyal.in</a></sub>
+</td>
+</tr>
+</table>
 
-<p>
-  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-home.png" height="300" alt="Morph on iPhone: the home screen">
-  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-actions-dark.png" height="300" alt="Morph on iPhone: the actions for a file">
-  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-result.png" height="300" alt="Morph on iPhone: a converted result">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-home.png" height="260" alt="Morph on iPhone: the home screen">
+  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-actions-dark.png" height="260" alt="Morph on iPhone: the actions for a file">
+  <img src="https://raw.githubusercontent.com/geetxnshgoyal/morph/main/docs/images/ios-result.png" height="260" alt="Morph on iPhone: a converted result">
 </p>
-
-**[Uyuni MQTT + Node-RED](https://github.com/geetxnshgoyal/gsoc-2026-uyuni-mqtt)** &nbsp;·&nbsp; GSoC 2026, openSUSE  
-[Uyuni](https://www.uyuni-project.org/) knew the moment a machine registered or a Salt job came
-back, but none of it left the server, so automating on it meant polling an API and diffing. I added
-an MQTT event publisher to its Java core, a documented topic scheme, and a Node-RED node package.
-[RFC #119](https://github.com/uyuni-project/uyuni-rfc/pull/119) set the design;
-[PR #12385](https://github.com/uyuni-project/uyuni/pull/12385) is +5,211 lines across 69 files.
-[Write-up on openSUSE News](https://news.opensuse.org/2026/09/03/gsoc-2026-uyuni-mqtt-nodered/).
-
-**[Doorman](https://github.com/geetxnshgoyal/m5-StickC-plus2-doorman)** &nbsp;·&nbsp; [flash it from your browser](https://geetxnshgoyal.github.io/m5-StickC-plus2-doorman/)  
-Smart bulbs have no browser, so they never clear a hotel captive portal. Doorman turns an ESP32
-into a bridge that signs in once, WPA2-Enterprise included, and gives every device behind it a
-plain WPA2-PSK network.
-
-**[RetroOS](https://github.com/geetxnshgoyal/Retro-OS)** &nbsp;·&nbsp; [try it](https://geetanshgoyal.in)  
-A tiling window manager and desktop in vanilla JavaScript with no dependencies: workspaces, a
-terminal with history and tab completion. It runs on a CRT inside a 3D room on my site.
 
 ### The record
 
