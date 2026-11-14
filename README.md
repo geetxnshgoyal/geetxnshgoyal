@@ -8,6 +8,7 @@ I build backend systems and developer tooling, mostly in the open, and ship apps
 - **Speaking:** openSUSE Conference 2026 in Nuremberg; presented Bengaluru's bid to host openSUSE.Asia Summit 2027
 - **Community:** ran DevForge, my college's developer club, for a year
 - **Stack:** Java, TypeScript, Python, Swift, C++, React, Flutter, Postgres, MQTT
+- **Open to:** software engineering internships. Reach me at [goyalgeetansh@gmail.com](mailto:goyalgeetansh@gmail.com)
 
 ### What I've built
 
