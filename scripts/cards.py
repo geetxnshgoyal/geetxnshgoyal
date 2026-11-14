@@ -463,10 +463,10 @@ PROJECTS = [  # slug, repo, kicker, title, blurb, highlight, accent
      "Signs in to a hotel or campus captive portal once, WPA2-Enterprise included, "
      "and shares a plain network with every smart device behind it.",
      "flash it from the browser", "#ebcb8b"),
-    ("retroos", "Retro-OS", "VANILLA JS / ZERO DEPS", "RetroOS",
-     "A tiling window manager and desktop with workspaces and a real terminal, "
-     "running on a CRT inside a 3D room.",
-     "live on geetanshgoyal.in", "#b48ead"),
+    ("argus", "argus", "COLLEGE ATTENDANCE / WEB + MOBILE", "Argus",
+     "Attendance that resists proxies: a classroom QR code that rotates every 3 seconds, "
+     "scans signed by a hardware key bound to each student, and layered anti-proxy checks.",
+     "live on Vercel + Android", "#b48ead"),
 ]
 
 

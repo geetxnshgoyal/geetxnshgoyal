@@ -23,8 +23,8 @@ School of Technology in Bengaluru.
 <sub><a href="https://geetxnshgoyal.github.io/m5-StickC-plus2-doorman/">flash it from your browser</a></sub>
 </td>
 <td width="50%" valign="top">
-<a href="https://github.com/geetxnshgoyal/Retro-OS"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/project-retroos.svg" alt="RetroOS: a tiling desktop in vanilla JavaScript" width="100%"></a><br>
-<sub><a href="https://geetanshgoyal.in">try it on geetanshgoyal.in</a></sub>
+<a href="https://github.com/geetxnshgoyal/argus"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/project-argus.svg" alt="Argus: proxy-resistant college attendance with rotating QR codes and hardware-bound phones" width="100%"></a><br>
+<sub><a href="https://argus-attendance.vercel.app">live app</a> · <a href="https://github.com/geetxnshgoyal/argus/releases/latest/download/argus.apk">Android APK</a></sub>
 </td>
 </tr>
 </table>
