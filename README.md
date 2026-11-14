@@ -1,8 +1,13 @@
 <img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/profile.svg?v=3" alt="Profile card: Geetansh Goyal, @geetxnshgoyal, openSUSE, Bengaluru, member since May 2021" width="100%">
 
-I write backend systems and developer tooling, mostly in the open, and I ship apps people install.
-Google Summer of Code 2026 with **openSUSE**, ICPC Amritapuri regionalist, B.Tech CS at Newton
-School of Technology in Bengaluru.
+**Software engineer** and second-year B.Tech CS student at Newton School of Technology, Bengaluru (2025-2029).
+I build backend systems and developer tooling, mostly in the open, and ship apps people install.
+
+- **Open source:** Google Summer of Code 2026 with openSUSE, [openSUSE Member](https://en.opensuse.org/openSUSE:Members) since February 2026, 140+ merged pull requests
+- **Competitive programming:** ICPC Amritapuri regionalist
+- **Speaking:** openSUSE Conference 2026 in Nuremberg; presented Bengaluru's bid to host openSUSE.Asia Summit 2027
+- **Community:** ran DevForge, my college's developer club, for a year
+- **Stack:** Java, TypeScript, Python, Swift, C++, React, Flutter, Postgres, MQTT
 
 ### What I've built
 
@@ -36,12 +41,6 @@ School of Technology in Bengaluru.
 <img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/garden.svg" alt="A tree of commits: one limb per active season since 2021, foliage coloured by season" width="100%">
 
 <sub>Both cards are drawn by <a href="scripts/cards.py">scripts/cards.py</a> from public GitHub data and refreshed nightly.</sub>
-
-### Elsewhere
-
-Spoke at **openSUSE Conference 2026** in Nuremberg, presented Bengaluru's bid to host
-**openSUSE.Asia Summit 2027** in Yogyakarta, [openSUSE Member](https://en.opensuse.org/openSUSE:Members)
-since February 2026, and ran **DevForge**, my college's developer club, for a year.
 
 [geetanshgoyal.in](https://geetanshgoyal.in) &nbsp;·&nbsp;
 [LinkedIn](https://www.linkedin.com/in/geetanshgoyal/) &nbsp;·&nbsp;
