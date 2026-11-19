@@ -1,7 +1,6 @@
 <a href="https://geetanshgoyal.in"><img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/hero.svg" alt="Geetansh Goyal, software engineer, GSoC 2026 at openSUSE, with an ASCII portrait that prints in row by row" width="100%"></a>
 
 **Software engineer** and second-year B.Tech CS student at Newton School of Technology, Bengaluru (2025-2029).
-I build backend systems and developer tooling, mostly in the open, and ship apps people install.
 
 - **Open source:** Google Summer of Code 2026 with openSUSE, [openSUSE Member](https://en.opensuse.org/openSUSE:Members) since February 2026, 140+ merged pull requests
 - **Competitive programming:** ICPC Amritapuri regionalist
