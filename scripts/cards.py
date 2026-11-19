@@ -416,6 +416,29 @@ def project_svg(p, project):
 
 
 
+def portrait_svg(lines, W=820, pad=50):
+    """ASCII portrait (assets/portrait.txt) that prints in row by row."""
+    import html
+    cols = max(len(l) for l in lines)
+    cw = (W - 2 * pad) / cols
+    rh = cw / 0.52
+    H = round(len(lines) * rh + 2 * pad)
+    css = (".r{font:%.2fpx ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#4a4a4a;white-space:pre;"
+           "opacity:0;animation:p .35s ease-out forwards}"
+           "@keyframes p{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}"
+           "@media (prefers-reduced-motion:reduce){.r{animation:none;opacity:1}}") % (rh * 0.86)
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
+           f"<style>{css}</style>",
+           f'<rect x="1" y="1" width="{W-2}" height="{H-2}" rx="22" fill="#f3f3f1" stroke="#e4e4e0"/>']
+    for i, l in enumerate(lines):
+        if l.strip():
+            # textLength pins each row to the grid whatever monospace font the viewer has
+            out.append(f'<text class="r" x="{pad}" y="{pad + (i + 0.8) * rh:.1f}" textLength="{cw * len(l):.1f}" '
+                       f'lengthAdjust="spacingAndGlyphs" style="animation-delay:{i * 18}ms" '
+                       f'xml:space="preserve">{html.escape(l)}</text>')
+    return "\n".join(out + ["</svg>"])
+
+
 def main():
     login, out = sys.argv[1], sys.argv[2]
     os.makedirs(out, exist_ok=True)
@@ -424,6 +447,11 @@ def main():
     for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("garden", tree_svg)):
         with open(os.path.join(out, f"{name}.svg"), "w") as f:
             f.write(fn(p))
+    here = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(here, "..", "assets", "portrait.txt")) as f:
+        lines = f.read().rstrip("\n").split("\n")
+    with open(os.path.join(out, "portrait.svg"), "w") as f:
+        f.write(portrait_svg(lines))
     for project in PROJECTS:
         with open(os.path.join(out, f"project-{project[0]}.svg"), "w") as f:
             f.write(project_svg(p, project))

@@ -1,11 +1,13 @@
 <img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/profile.svg?v=3" alt="Profile card: Geetansh Goyal, @geetxnshgoyal, openSUSE, Bengaluru, member since May 2021" width="100%">
 
+<img align="right" width="36%" src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/portrait.svg" alt="ASCII portrait of Geetansh, printed row by row">
+
 **Software engineer** and second-year B.Tech CS student at Newton School of Technology, Bengaluru (2025-2029).
 I build backend systems and developer tooling, mostly in the open, and ship apps people install.
 
 - **Open source:** Google Summer of Code 2026 with openSUSE, [openSUSE Member](https://en.opensuse.org/openSUSE:Members) since February 2026, 140+ merged pull requests
 - **Competitive programming:** ICPC Amritapuri regionalist
-- **Speaking:** openSUSE Conference 2026 in Nuremberg; presented Bengaluru's bid to host openSUSE.Asia Summit 2027
+- **Speaking:** openSUSE Conference 2026 in Nuremberg and openSUSE.Asia Summit 2026 in Yogyakarta, where I presented Bengaluru's bid to host openSUSE.Asia Summit 2027
 - **Community:** ran DevForge, my college's developer club, for a year
 - **Stack:** Java, TypeScript, Python, Swift, C++, React, Flutter, Postgres, MQTT
 - **Open to:** software engineering internships. Reach me at [goyalgeetansh@gmail.com](mailto:goyalgeetansh@gmail.com)
