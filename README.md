@@ -36,7 +36,7 @@
 
 ### The record
 
-<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/activity.svg?v=3" alt="Activity recorder: contributions in the last 12 months, current and longest streak, merged pull requests, and a year heatmap" width="100%">
+<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/record.svg" alt="Activity recorder: contributions in the last 12 months, current and longest streak, merged pull requests, and a year heatmap" width="100%">
 
 <img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/garden.svg" alt="A tree of commits: one limb per active season since 2021, foliage coloured by season" width="100%">
 
