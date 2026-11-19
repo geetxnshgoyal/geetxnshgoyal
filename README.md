@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/profile.svg?v=3" alt="Profile card: Geetansh Goyal, @geetxnshgoyal, openSUSE, Bengaluru, member since May 2021" width="100%">
+
 
 <img align="right" width="36%" src="https://raw.githubusercontent.com/geetxnshgoyal/geetxnshgoyal/output/portrait.svg" alt="ASCII portrait of Geetansh, printed row by row">
 
