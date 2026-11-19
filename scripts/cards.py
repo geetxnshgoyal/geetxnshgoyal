@@ -108,19 +108,19 @@ GLYPHS = {
     "0": ["01110", "10001", "10011", "10101", "11001", "10001", "01110"],
     "1": ["00100", "01100", "00100", "00100", "00100", "00100", "01110"],
     "2": ["01110", "10001", "00001", "00010", "00100", "01000", "11111"],
-    "3": ["11110", "00001", "00001", "01110", "00001", "00001", "11110"],
+    "3": ["01110", "10001", "00001", "00110", "00001", "10001", "01110"],
     "4": ["00010", "00110", "01010", "10010", "11111", "00010", "00010"],
     "5": ["11111", "10000", "11110", "00001", "00001", "10001", "01110"],
     "6": ["00110", "01000", "10000", "11110", "10001", "10001", "01110"],
     "7": ["11111", "00001", "00010", "00100", "01000", "01000", "01000"],
     "8": ["01110", "10001", "10001", "01110", "10001", "10001", "01110"],
     "9": ["01110", "10001", "10001", "01111", "00001", "00010", "01100"],
-    ",": ["00000", "00000", "00000", "00000", "00110", "00100", "01000"],
+    ",": ["00000", "00000", "00000", "00000", "01000", "01000", "10000"],
 }
 
 
 def dot_text(text, x, y, dot, fill):
-    out, pitch = [], dot * 1.75
+    out, pitch = [], dot * 1.3
     for ch in text:
         g = GLYPHS[ch]
         for r, row in enumerate(g):
@@ -161,7 +161,7 @@ def activity_svg(p):
         f'<line x1="44" y1="60" x2="{w - 44}" y2="60" stroke="{INK}" stroke-width="1.5"/>'
         f'<text x="44" y="88" font-size="15" letter-spacing="1">{escape(p["name"].upper())} / @{escape(p["login"])}</text>'
     )
-    number, nx = dot_text(f"{year:,}", 44, 104, 9, INK)
+    number, nx = dot_text(f"{year:,}", 44, 104, 11, INK)
     side = 560
     stat = lambda y, v, label: (
         f'<text x="{side}" y="{y}" font-size="34" font-weight="700">{v}</text>'
@@ -194,43 +194,6 @@ def activity_svg(p):
     )
     return paper(w, h, head + number + stats + caption + "".join(cells) + foot,
                  f'{year:,} contributions in the last 12 months, current streak {cur}, longest streak {longest}')
-
-
-def profile_svg(p):
-    w, h = 820, 330
-    joined = dt.date.fromisoformat(p["joined"])
-    fields = [
-        ("ORGANIZATION", p["company"] or "openSUSE"),
-        ("LOCATION", p["location"]),
-        ("MEMBER SINCE", f"{joined:%b %Y}".upper()),
-        ("PRIMARY LANGUAGE", p["language"]),
-        ("PUBLIC REPOS", str(p["repos"])),
-    ]
-    col = (w - 88) / len(fields)
-    cells = "".join(
-        f'<text x="{44 + i * col:.0f}" y="268" font-size="10" fill="{FAINT}" letter-spacing="1">{k}</text>'
-        f'<text x="{44 + i * col:.0f}" y="292" font-size="15" font-weight="700">{escape(v)}</text>'
-        + (f'<line x1="{36 + i * col:.0f}" y1="252" x2="{36 + i * col:.0f}" y2="300" stroke="{RULE}"/>' if i else "")
-        for i, (k, v) in enumerate(fields)
-    )
-    first, _, rest = p["name"].partition(" ")
-    body = (
-        f'<text x="44" y="46" font-size="13" letter-spacing="2">GITHUB / PROFILE</text>'
-        f'<text x="{w - 44}" y="46" font-size="11" fill="{FAINT}" text-anchor="end" letter-spacing="1">UPDATED {p["today"]:%Y-%m-%d}</text>'
-        f'<line x1="44" y1="60" x2="{w - 44}" y2="60" stroke="{INK}" stroke-width="1.5"/>'
-        '<defs><clipPath id="av"><circle cx="134" cy="150" r="70"/></clipPath>'
-        '<filter id="mono"><feColorMatrix type="saturate" values="0"/>'
-        '<feComponentTransfer><feFuncR type="linear" slope="1.9" intercept=".08"/><feFuncG type="linear" slope="1.9" intercept=".08"/><feFuncB type="linear" slope="1.9" intercept=".08"/></feComponentTransfer><feComponentTransfer><feFuncR type="discrete" tableValues="0.15 0.45 0.75 0.95"/>'
-        '<feFuncG type="discrete" tableValues="0.14 0.43 0.72 0.93"/>'
-        '<feFuncB type="discrete" tableValues="0.12 0.39 0.66 0.88"/></feComponentTransfer></filter></defs>'
-        f'<image href="{p["avatar"]}" x="64" y="80" width="140" height="140" clip-path="url(#av)" filter="url(#mono)"/>'
-        f'<circle cx="134" cy="150" r="70" fill="none" stroke="{INK}" stroke-width="1.5"/>'
-        f'<text x="244" y="136" font-size="46" font-weight="800" letter-spacing="1">{escape(first)}</text>'
-        f'<text x="244" y="186" font-size="46" font-weight="800" letter-spacing="1">{escape(rest)}</text>'
-        f'<text x="246" y="216" font-size="15" fill="{FAINT}">@{escape(p["login"])} · {p["stars"]} stars · {p["merged_prs"]} merged PRs</text>'
-        f'<line x1="44" y1="244" x2="{w - 44}" y2="244" stroke="{INK}" stroke-width="1"/>' + cells
-    )
-    return paper(w, h, body, f'GitHub profile of {p["name"]} (@{p["login"]})')
 
 
 SEASON_ORDER = ("winter", "spring", "summer", "autumn")
@@ -416,27 +379,57 @@ def project_svg(p, project):
 
 
 
-def portrait_svg(lines, W=820, pad=50):
-    """ASCII portrait (assets/portrait.txt) that prints in row by row."""
+def hero_svg(p):
+    """Name card in the style of a magazine cover: ASCII portrait printing in on the left,
+    a big serif name on the right. Fonts are subset WOFFs in assets/fonts (OFL)."""
     import html
+    here = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets")
+    with open(os.path.join(here, "portrait.txt")) as f:
+        lines = f.read().rstrip("\n").split("\n")
+    font = lambda n: base64.b64encode(open(os.path.join(here, "fonts", n), "rb").read()).decode()
+    W, H = 1400, 680
     cols = max(len(l) for l in lines)
-    cw = (W - 2 * pad) / cols
+    cw = 520 / cols
     rh = cw / 0.52
-    H = round(len(lines) * rh + 2 * pad)
-    css = (".r{font:%.2fpx ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#4a4a4a;white-space:pre;"
-           "opacity:0;animation:p .35s ease-out forwards}"
-           "@keyframes p{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}"
-           "@media (prefers-reduced-motion:reduce){.r{animation:none;opacity:1}}") % (rh * 0.86)
-    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
-           f"<style>{css}</style>",
-           f'<rect x="1" y="1" width="{W-2}" height="{H-2}" rx="22" fill="#f3f3f1" stroke="#e4e4e0"/>']
+    top = (H - len(lines) * rh) / 2
+    rows = []
     for i, l in enumerate(lines):
         if l.strip():
             # textLength pins each row to the grid whatever monospace font the viewer has
-            out.append(f'<text class="r" x="{pad}" y="{pad + (i + 0.8) * rh:.1f}" textLength="{cw * len(l):.1f}" '
-                       f'lengthAdjust="spacingAndGlyphs" style="animation-delay:{i * 18}ms" '
-                       f'xml:space="preserve">{html.escape(l)}</text>')
-    return "\n".join(out + ["</svg>"])
+            rows.append(f'<text class="r" x="56" y="{top + (i + 0.8) * rh:.1f}" textLength="{cw * len(l):.1f}" '
+                        f'lengthAdjust="spacingAndGlyphs" style="animation-delay:{300 + i * 18}ms" '
+                        f'xml:space="preserve">{html.escape(l)}</text>')
+    css = f"""
+@font-face{{font-family:IS;src:url(data:font/woff;base64,{font("serif-Regular.woff")}) format("woff")}}
+@font-face{{font-family:ISI;src:url(data:font/woff;base64,{font("serif-Italic.woff")}) format("woff")}}
+.r{{font:{rh * 0.86:.2f}px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#3d3d3d;white-space:pre}}
+.k{{font:600 21px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:2.6px;fill:#555}}
+.n{{font-size:172px;fill:#141414}}
+.b{{font:27px -apple-system,'Segoe UI',Helvetica,Arial,sans-serif;fill:#3a3a3a}}
+.u{{font:600 22px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#1a1a1a}}
+.r,.k,.n,.b,.u{{opacity:0;animation:in .7s cubic-bezier(.2,.8,.2,1) forwards}}
+.n{{animation-name:rise}}
+@keyframes in{{from{{opacity:0}}to{{opacity:1}}}}
+@keyframes rise{{from{{opacity:0;transform:translateY(46px)}}to{{opacity:1;transform:none}}}}
+@media (prefers-reduced-motion:reduce){{.r,.k,.n,.b,.u{{animation:none;opacity:1}}}}"""
+    x = 668
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">
+<style>{css}</style>
+<defs><linearGradient id="sh" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0" stop-color="#141414"/><stop offset=".42" stop-color="#141414"/><stop offset=".5" stop-color="#73ba25"/>
+<stop offset=".58" stop-color="#141414"/><stop offset="1" stop-color="#141414"/>
+<animateTransform attributeName="gradientTransform" type="translate" values="-1 0;-1 0;1 0" keyTimes="0;.45;1" dur="4.5s" begin="1.4s" repeatCount="indefinite"/>
+</linearGradient></defs>
+<rect x="1" y="1" width="{W - 2}" height="{H - 2}" rx="28" fill="#f3f3f1" stroke="#e2e2de"/>
+{"".join(rows)}
+<rect x="{x}" y="126" width="15" height="15" rx="3" fill="#73ba25"><animate attributeName="opacity" values="1;.3;1" dur="1.8s" repeatCount="indefinite"/></rect>
+<text class="k" x="{x + 30}" y="140">SOFTWARE ENGINEER · GSOC '26 @ OPENSUSE</text>
+<text class="n" x="{x - 8}" y="322" style="font-family:IS;animation-delay:.15s">Geetansh</text>
+<text class="n" x="{x + 22}" y="476" fill="url(#sh)" style="font-family:ISI;fill:url(#sh);animation-delay:.4s">Goyal</text>
+<text class="b" x="{x}" y="560" style="animation-delay:.8s">I build backend systems and developer tooling in the open,</text>
+<text class="b" x="{x}" y="598" style="animation-delay:.9s">and ship apps people actually install.</text>
+<text class="u" x="{x}" y="646" style="animation-delay:1.1s">geetanshgoyal.in <tspan fill="#73ba25">&#8599;</tspan></text>
+</svg>"""
 
 
 def main():
@@ -444,20 +437,15 @@ def main():
     os.makedirs(out, exist_ok=True)
     p = fetch(login)
     assert p["days"], "no contribution data returned"
-    for name, fn in (("activity", activity_svg), ("profile", profile_svg), ("garden", tree_svg)):
+    for name, fn in (("activity", activity_svg), ("hero", hero_svg), ("garden", tree_svg)):
         with open(os.path.join(out, f"{name}.svg"), "w") as f:
             f.write(fn(p))
-    here = os.path.dirname(os.path.abspath(__file__))
-    with open(os.path.join(here, "..", "assets", "portrait.txt")) as f:
-        lines = f.read().rstrip("\n").split("\n")
-    with open(os.path.join(out, "portrait.svg"), "w") as f:
-        f.write(portrait_svg(lines))
     for project in PROJECTS:
         with open(os.path.join(out, f"project-{project[0]}.svg"), "w") as f:
             f.write(project_svg(p, project))
     with open(os.path.join(out, "history.json"), "w") as f:
         json.dump([{"year": y, "seasons": s} for y, s in season_years(p["days"], p["today"])], f, indent=1)
-    print(f"wrote {out}/activity.svg profile.svg garden.svg ({len(p['days'])} days)")
+    print(f"wrote {out}/activity.svg hero.svg garden.svg ({len(p['days'])} days)")
 
 
 if __name__ == "__main__":
